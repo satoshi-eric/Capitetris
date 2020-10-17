@@ -55,8 +55,7 @@ Ao final de cada partida, o sistema deverá permitir ao usuário escolher se ele
 
 **ATENÇÃO 3**: para o desenvolvimento do jogo, será necessário estudar o funcionamento de [eventos temporizados](https://www.w3schools.com/js/js_timing.asp "Eventos Temporizados") em  _JavaScript_.
 
-**_Back-end_  
-**
+**_Back-end_**
 
 Como já mencionado, o _back-end_ da plataforma do  **RT**  será responsável por gerenciar a autenticação dos jogadores, o armazenamento e recuperação dos resultados de cada partida jogada e a elaboração do _ranking_ de melhores jogadores cadastrados. Toda a implementação do _back-end_  deverá ser feita em  **PHP**  e os dados armazenados em um Sistema Gerenciador de Bancos de Dados (SGBD) SGBD  **MySQL ou MariaDB**.
 
