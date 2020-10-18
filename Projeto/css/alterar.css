@@ -59,7 +59,7 @@ input[type="text"],input[type="tel"],input[type="email"],input[type="password"] 
     width: 30em;
     height: 2.6em;
     padding: 0 0.8em 0 0.8em;
-    margin: 12px 0px;*
+    margin: 12px 0px;
     outline: none;
 }
 input::placeholder {

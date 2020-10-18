@@ -1,11 +1,14 @@
+/* Importando fonte do google */
 @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
 
+/* Definindo propriedades gerais para os elementos da página */
 * {
     font-family: 'Press Start 2P', cursive;
     margin: 0;
     padding: 0;
 }
 
+/* Propriedades para o body */
 body {
     background-image: url('../images/bkg.jpeg');
     background-repeat: no-repeat;
@@ -14,12 +17,14 @@ body {
     display: flex; 
 }
 
+/* Propriedades para o formulário */
 form {
     justify-content: center;
     flex-direction: column;
     width: 600px;
 }
 
+/* Propriedades gerais do container */
 .container {
     height: 100vh;
     width: 100vw;
@@ -27,12 +32,42 @@ form {
     justify-content: center;
     align-items: center;
     flex-direction: column;
+    margin-top: -3%;
 }
 
+/* Propriedades para o botão voltar */
+.container a#voltar {
+    position: absolute;
+    left: 0;
+    top: 0;
+    margin-top: 20px;
+    margin-left: 20px;
+
+    /* propriedades para a customização da texto */
+    text-decoration: none;
+    font-size: 36px;
+    color: #e2e2e2;
+    text-shadow: 3px 3px 0 #b388eb;
+    -webkit-text-stroke-width: 1px;
+    -webkit-text-stroke-color: black;
+    text-align: center;
+    transition: 0.3s;
+}
+
+.container a#voltar:hover {
+    color: #8f65c5;
+    -webkit-text-stroke-color: #e2e2e2;
+    text-shadow: 3px 3px 0 #e2e2e2;
+    font-size: 50px;
+}
+
+/* Propriedades para o título da página */
 .container h1 {
     font-size: 36px;
     color: #e2e2e2;
     text-shadow: 6px 6px 0 #b388eb;
+    stroke-width: 1px;
+    stroke: black;
     -webkit-text-stroke-width: 1px;
     -webkit-text-stroke-color: black;
     text-align: center;
@@ -88,7 +123,7 @@ input::placeholder {
 }
 
 
-
+/* Configurações para responsibilidade de telas de celular */
 @media (max-width: 575.98px) {
     form {
         width: 400px;
@@ -100,5 +135,9 @@ input::placeholder {
 
     .button {
         width: 90%!important;
+    }
+
+    .container a#voltar {
+        margin-left: -70%!important;
     }
 }
