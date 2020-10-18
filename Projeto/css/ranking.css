@@ -7,6 +7,25 @@ body {
     text-shadow: 6px 6px 0 #EFC100;
 }
 
+.voltar {
+    text-decoration: none;
+    position: absolute;
+    left: 0;
+    top: 0;
+    padding: 20px;
+    font-size: 36px;
+    color: #e2e2e2;
+    text-shadow: 3px 3px 0 #EFC100;
+    -webkit-text-stroke-width: 2px;
+    -webkit-text-stroke-color: black;
+    text-align: center;
+    transition: font-size .25s ease;
+}
+
+.voltar:hover {
+    font-size: 40px;
+}
+
 .rankingTitle {
     display: flex;
 }
@@ -52,6 +71,21 @@ body {
     font-size: 18px;
 }
 
+.rankingSpecs {
+    display: flex;
+    align-items: center;
+}
+
+.rankingPoints {
+    margin: 0px 20px 0px 30px;
+}
+
+.rankingPosition {
+    width: 40px;
+    margin: 0px 20px;
+    text-align: center;
+}
+
 .rankingNavWrapper {
     display: flex;
     width: 60%;
@@ -61,26 +95,25 @@ body {
 
 .rankingNav {
     margin: 20px 0;
-
-}
-
-.navIcon {
-    height: 40px;
 }
 
 .rankingOption {
     color: #E2E2E2;
-    font-size: 22px;
+    font-size: 28px;
     align-self: center!important;
     padding: 15px 15px 10px;
-    border-bottom: 4px solid transparent;
-    transition: border-bottom .25s ease;
+    -webkit-text-stroke-width: 2px;
+    -webkit-text-stroke-color: transparent;
+    transition: .25s ease;
 }
 
 .rankingOption:hover {
     cursor: pointer;
-    color: #c4c3c3;
-    border-bottom: 4px solid #c4c3c3;
+    /* color: #c4c3c3;
+    border-bottom: 4px solid #c4c3c3; */
+    text-shadow: 3px 3px 0 #b388eb;
+    -webkit-text-stroke-width: 2px;
+    -webkit-text-stroke-color: black;
 }
 
 @media (max-width: 575.98px) { 

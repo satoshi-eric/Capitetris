@@ -32,7 +32,7 @@ form {
     font-size: 36px;
     color: #e2e2e2;
     text-shadow: 6px 6px 0 #b388eb;
-    -webkit-text-stroke-width: 1px;
+    -webkit-text-stroke-width: 3px;
     -webkit-text-stroke-color: black;
     text-align: center;
     margin-bottom: 20px;
