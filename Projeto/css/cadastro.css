@@ -51,7 +51,7 @@ form {
     -webkit-text-stroke-width: 1px;
     -webkit-text-stroke-color: black;
     text-align: center;
-    transition: 0.3s;
+    transition: 0.25s;
 }
 
 .container a#voltar:hover {
@@ -66,9 +66,7 @@ form {
     font-size: 36px;
     color: #e2e2e2;
     text-shadow: 6px 6px 0 #b388eb;
-    stroke-width: 1px;
-    stroke: black;
-    -webkit-text-stroke-width: 1px;
+    -webkit-text-stroke-width: 0.5px;
     -webkit-text-stroke-color: black;
     text-align: center;
     margin-bottom: 20px;

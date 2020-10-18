@@ -15,15 +15,18 @@ body {
     padding: 20px;
     font-size: 36px;
     color: #e2e2e2;
-    text-shadow: 3px 3px 0 #EFC100;
-    -webkit-text-stroke-width: 2px;
+    text-shadow: 3px 3px 0 #b388eb;
+    -webkit-text-stroke-width: 1px;
     -webkit-text-stroke-color: black;
     text-align: center;
     transition: font-size .25s ease;
 }
 
 .voltar:hover {
-    font-size: 40px;
+    color: #8f65c5;
+    -webkit-text-stroke-color: #e2e2e2;
+    text-shadow: 3px 3px 0 #e2e2e2;
+    font-size: 50px;
 }
 
 .rankingTitle {
