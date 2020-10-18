@@ -5,6 +5,7 @@
     margin: 0;
     padding: 0;
 }
+
 body {
     background-image: url('../images/bkg.jpeg');
     background-repeat: no-repeat;
@@ -17,6 +18,7 @@ form {
     align-items: center;
     flex-direction: column;
 }
+
 .container {
     height: 100vh;
     width: 100vw;
@@ -25,6 +27,30 @@ form {
     align-items: center;
     flex-direction: column;
 }
+
+.container a.voltar {
+    position: absolute;
+    left: 0;
+    top: 0;
+    margin-top: 20px;
+    margin-left: 20px;
+    text-decoration: none;
+    font-size: 36px;
+    color: #e2e2e2;
+    text-shadow: 3px 3px 0 #b388eb;
+    -webkit-text-stroke-width: 1px;
+    -webkit-text-stroke-color: black;
+    text-align: center;
+    transition: 0.25s;
+}
+
+.container a.voltar:hover {
+    color: #8f65c5;
+    -webkit-text-stroke-color: #e2e2e2;
+    text-shadow: 3px 3px 0 #e2e2e2;
+    font-size: 50px;
+}
+
 .container h1 {
     font-size: 36px;
     color: #e2e2e2;
@@ -62,6 +88,7 @@ input[type="text"],input[type="tel"],input[type="email"],input[type="password"] 
     margin: 12px 0px;
     outline: none;
 }
+
 input::placeholder {
     color: rgb(155, 155, 155);
 }
