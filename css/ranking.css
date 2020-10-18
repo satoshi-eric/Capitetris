@@ -1,0 +1,107 @@
+body {
+    background-image: none;
+    background-color: #242424;
+    padding: 20px;
+}
+.container h1 {
+    text-shadow: 6px 6px 0 #EFC100;
+}
+
+.rankingTitle {
+    display: flex;
+}
+
+.imgTrophy {
+    height: 40px;
+    margin: 0px 20px;
+}
+
+.rankingWrapper {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    align-items: center;
+}
+
+.rankingCard {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 60%;
+    height: 50px;
+    padding: 20px;
+    background-color: #E2E2E2;
+    box-shadow: 8px 8px 0px #121212;
+    margin: 25px;
+    margin-right: 0;
+}
+
+.rankingCard:nth-of-type(2) {
+    box-shadow: 8px 8px 0px #EFC100;
+}
+
+.rankingCard:nth-of-type(3) {
+    box-shadow: 8px 8px 0px #C0C0C0;
+}
+
+.rankingCard:nth-of-type(4) {
+    box-shadow: 8px 8px 0px #B1560F;
+}
+
+.rankingName {
+    font-size: 18px;
+}
+
+.rankingNavWrapper {
+    display: flex;
+    width: 60%;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.rankingNav {
+    margin: 20px 0;
+
+}
+
+.navIcon {
+    height: 40px;
+}
+
+.rankingOption {
+    color: #E2E2E2;
+    font-size: 22px;
+    align-self: center!important;
+    padding: 15px 15px 10px;
+    border-bottom: 4px solid transparent;
+    transition: border-bottom .25s ease;
+}
+
+.rankingOption:hover {
+    cursor: pointer;
+    color: #c4c3c3;
+    border-bottom: 4px solid #c4c3c3;
+}
+
+@media (max-width: 575.98px) { 
+    body {
+        padding: 0;
+    }
+
+    .imgTrophy {
+        display: none;
+    }
+
+    .rankingNavWrapper {
+        width: 100%;
+    }
+
+    .rankingWrapper {
+        width: 100%!important;
+        align-items: unset;
+    }
+
+    .rankingCard {
+        width: 73%;
+    }
+}
