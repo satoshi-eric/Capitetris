@@ -30,7 +30,7 @@ form {
     margin-top: -3%;
 }
 
-.container a#voltar {
+.container a.voltar {
     position: absolute;
     left: 0;
     top: 0;
@@ -46,7 +46,7 @@ form {
     transition: 0.25s;
 }
 
-.container a#voltar:hover {
+.container a.voltar:hover {
     color: #8f65c5;
     -webkit-text-stroke-color: #e2e2e2;
     text-shadow: 3px 3px 0 #e2e2e2;
@@ -124,7 +124,7 @@ input::placeholder {
         width: 90%!important;
     }
 
-    .container a#voltar {
+    .container a.voltar {
         margin-left: -70%!important;
     }
 }
