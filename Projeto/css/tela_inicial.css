@@ -1,0 +1,108 @@
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+body{
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+    background-color: #242424;
+    font-family: 'Press Start 2P', cursive;
+}
+
+div.container{
+    display: flex;
+    flex-direction: row;
+    height: 100vh;
+}
+
+div.container > div.ranking-container{
+    flex: 25%;
+    display: flex;
+    flex-direction: column;
+    /* justify-content: center; */
+    padding: 0px 10px;
+    /* background-color: green; */
+}
+
+div.container > div.ranking-container > div.card-ranking{
+    width: 90%;
+    border: none;
+    background-color: #ffffff;
+    box-shadow: 5px 5px #B388EB;
+    padding: 5px;
+    margin: 10px 0px;
+    transition: .3s ease-in-out;
+    cursor: pointer;
+
+}
+
+div.container > div.ranking-container > div.card-ranking:hover{
+    width: 95%;
+}
+
+div.container > div.ranking-container > div.card-ranking > p{
+    font-size: 12px;
+    color: #212121;
+}
+
+div.container > div.ranking-container > p.title-tela-inicial{
+    margin: 30px 0px;
+    padding: 0px;    
+    font-size: 25px;
+    text-shadow: 10px 10px #B388EB;
+    color: #ffffff;
+    text-align: center;
+    -webkit-text-stroke-width: 2px;
+    -webkit-text-stroke-color: #000000;
+}
+
+div.container > div.tabuleiro{
+    flex: 45%;
+    background-color: #B388EB;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+div.container > div.game-data{
+    flex: 30%;
+    display: flex;
+    flex-direction: column;
+    padding: 0px 10px;
+    /* background-color: yellow; */
+}
+
+div.container > div.game-data > div.next-piece{
+    width: 80%;
+    box-shadow: 5px 5px #B388EB;
+    height: 35%;
+    /* border: 1px solid red; */
+    margin: 30px 0px;
+    background-color: #393939;
+}
+
+div.level,
+div.score,
+div.lines,
+div.time
+{
+    /* border: 1px solid red; */
+    display:flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 0px 10px;
+}
+
+p.title-game-data{
+    font-size: 24px;
+    color: #ffffff;
+    text-shadow: 5px 5px #B388EB;
+    -webkit-text-stroke-width: 2px;
+    -webkit-text-stroke-color: #000000;
+}
+
+p.content-game-data{
+    color: #ffffff;
+    text-shadow: 5px 5px #B388EB;
+    -webkit-text-stroke-width: 1px;
+    -webkit-text-stroke-color: #000000;
+}
