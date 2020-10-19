@@ -3,6 +3,11 @@ body {
     background-color: #242424;
     padding: 20px;
 }
+
+.container {
+    margin-top: 25%;
+}
+
 .container h1 {
     text-shadow: 6px 6px 0 #EFC100;
 }
