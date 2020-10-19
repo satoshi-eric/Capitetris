@@ -11,12 +11,10 @@ body {
     background-repeat: no-repeat;
     background-size: cover;
     outline: none;
-    display: flex; 
+    display: flex;
 }
 
 form {
-    justify-content: center;
-    flex-direction: column;
     width: 600px;
 }
 
@@ -27,7 +25,7 @@ form {
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    margin-top: -3%;
+    padding-top: -3%;
 }
 
 .container a.voltar {
@@ -42,7 +40,6 @@ form {
     text-shadow: 3px 3px 0 #b388eb;
     -webkit-text-stroke-width: 1px;
     -webkit-text-stroke-color: black;
-    text-align: center;
     transition: 0.25s;
 }
 
@@ -63,12 +60,31 @@ form {
     margin-bottom: 20px;
 }
 
-.container > form a{
-    clear: both;
-    font-size: 10px;
-    text-decoration: none;
-    color: #e2e2e2;
-    margin: 0.7em 0;
+input{
+    background: #f2f2f2;
+    box-shadow: 7px 7px 0px #b388eb;
+    border: none;
+    width: 96%;
+    height: 2.6em;
+    padding: 0 0.8em 0 0.8em;
+    margin: 12px 0px;
+    outline: none;
+}
+
+input::placeholder {
+    color: rgb(155, 155, 155);
+}
+
+.nome, .telefone {
+    width: 55%;
+}
+
+.data, .cpf {
+    width: 35%;
+}
+
+.data {
+    color: rgb(155, 155, 155);
 }
 
 .container > form input[type="submit"] {
@@ -88,29 +104,6 @@ form {
     color: #c4c3c3;
 }
 
-input{
-    background: #f2f2f2;
-    box-shadow: 7px 7px 0px #b388eb;
-    border: none;
-    width: 96%;
-    height: 2.6em;
-    padding: 0 0.8em 0 0.8em;
-    margin: 12px 0px;
-    outline: none;
-}
-
-.nome, .telefone {
-    width: 55%;
-}
-
-.data, .cpf {
-    width: 35%;
-}
-
-input::placeholder {
-    color: rgb(155, 155, 155);
-}
-
 @media (max-width: 575.98px) {
     form {
         width: 400px;
@@ -120,11 +113,7 @@ input::placeholder {
         width: 90%!important;
     }
 
-    .button {
-        width: 90%!important;
-    }
-
     .container a.voltar {
-        margin-left: -70%!important;
+        margin-left: 0%!important;
     }
 }
