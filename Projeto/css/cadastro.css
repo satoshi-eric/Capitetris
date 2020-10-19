@@ -99,11 +99,11 @@ input{
     outline: none;
 }
 
-#nome, #telefone {
+.nome, .telefone {
     width: 55%;
 }
 
-#data, #cpf {
+.data, .cpf {
     width: 35%;
 }
 
