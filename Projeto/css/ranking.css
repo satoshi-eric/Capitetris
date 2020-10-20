@@ -5,7 +5,7 @@ body {
 }
 
 .container {
-    margin-top: 25%;
+    height: auto;
 }
 
 .container h1 {
@@ -88,6 +88,10 @@ body {
     margin: 0px 20px 0px 30px;
 }
 
+.rankingLevel {
+    margin: 0px 0px 0px 20px;
+}
+
 .rankingPosition {
     width: 40px;
     margin: 0px 20px;
@@ -145,4 +149,13 @@ body {
     .rankingCard {
         width: 73%;
     }
+
+    .rankingSpecs {
+        align-self: center;
+    }
+
+    .rankingPoints, .rankingLevel {
+        margin-left: 12px;
+    }
+
 }
