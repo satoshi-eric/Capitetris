@@ -82,13 +82,35 @@ input[type="text"],input[type="tel"],input[type="email"],input[type="password"] 
     background: #f2f2f2;
     box-shadow: 7px 7px 0px #b388eb;
     border: none;
-    width: 30em;
-    height: 2.6em;
-    padding: 0 0.8em 0 0.8em;
+    width: 70%;
+    height: 40px;
+    padding: 0 0.8em;
     margin: 12px 0px;
     outline: none;
 }
 
 input::placeholder {
     color: rgb(155, 155, 155);
+}
+
+@media (max-width: 575.98px) {
+    form {
+        width: 400px;
+    }
+    
+    .container >form input[type="submit"]{
+        width: 169px;
+    }
+
+    input[type="text"],input[type="tel"],input[type="email"],input[type="password"] {
+        width: 60%!important;
+        height: 32px;
+    }
+
+    .container a.voltar {
+        margin-left: 0%!important;
+    }
+    .container h1 {
+        font-size: 23px;
+    }
 }
