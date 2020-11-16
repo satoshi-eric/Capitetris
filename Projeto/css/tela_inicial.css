@@ -147,7 +147,7 @@ p.content-game-data{
     -webkit-text-stroke-color: #000000;
 }
 
-.quadrado{
+.tabuleiro > div {
     width: 30px;
     height: 30px;
     border: 1px solid #ddd;
