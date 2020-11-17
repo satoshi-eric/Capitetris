@@ -94,11 +94,13 @@ div.container > div.ranking-container > div.navigation > div.back{
 }
 
 div.container > div.tabuleiro{
-    flex: 45%;
-    background-color: #B388EB;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    margin-top: 30px;
+    width: 320px;
+    height: 600px;
+    /* margin-top: 30px; */
+    display:inline;
+    /* border: 1px solid red; */
+    background-color: aqua;
 }
 
 div.container > div.game-data{
@@ -114,7 +116,6 @@ div.container > div.game-data > div.next-piece{
     width: 80%;
     box-shadow: 5px 5px #B388EB;
     height: 35%;
-    /* border: 1px solid red; */
     margin: 30px 0px;
     background-color: #393939;
 }
@@ -144,4 +145,13 @@ p.content-game-data{
     text-shadow: 5px 5px #B388EB;
     -webkit-text-stroke-width: 1px;
     -webkit-text-stroke-color: #000000;
+}
+
+.tabuleiro > div {
+    width: 30px;
+    height: 30px;
+    border: 1px solid #ddd;
+
+    float: left;
+    background-color: white;
 }
