@@ -163,7 +163,7 @@ p.content-game-data{
 
 #tetris-canvas {
     position: relative;
-    top: 20px;
+    top: 40px;
     display: block;
     margin:0 auto;
     width: 300px;

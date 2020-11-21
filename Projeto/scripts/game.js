@@ -256,10 +256,14 @@ Peca.prototype.abaixar = function() {
     else {
         this.manter();
         p = pecaSortida(); //caso tenha uma peça abaixo, mantemos a peça no lugar onde ela se encontra e solicitanos uma nova peça
+
     }
 
 }
 
+/**
+ * Como eese não é um tetris comum, ao eliminar a peça especial o tabuleiro será invertido e as peças irão se mover para cima. Para que isso ocorra, precisamos da função para subir o tetromino
+ */
 Peca.prototype.subir = function() {
     if(!this.temColisao(0,1,this.tetrominoAtivo)){ //aqui, verificaremos se a peça tem colisão com algo em baixo
         this.remover();
