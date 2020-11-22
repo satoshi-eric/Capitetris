@@ -93,6 +93,11 @@ div.container > div.ranking-container > div.navigation > div.back{
     font-size: 30px;
 }
 
+div.navigation > div.nav_ranking > img {
+    position: relative;
+    top: -15px;
+} 
+
 div.container > div.tabuleiro{
     margin-top: 30px;
     width: 320px;
@@ -162,4 +167,20 @@ p.content-game-data{
 
 .iconNav:hover {
     transform: scale(1.04, 1.04);
+}
+
+#tetris-canvas {
+    position: relative;
+    top: 40px;
+    display: block;
+    margin:0 auto;
+    width: 300px;
+    height: 900px;
+}
+
+#tetris-canvas > div {
+    font-size: 25px;
+    font-weight: bold;
+    font-family: monospace;
+    text-align: center;
 }
