@@ -166,9 +166,9 @@ let tempoDificuldade = function(nivel) {
     }
 }
 
-let linha = 20;
-let coluna = COLUMN = 10;
-let tamQuadrado = squareSize = 30;
+let linha = 44;
+let coluna = COLUMN = 22;
+let tamQuadrado = squareSize = (30/2.2);
 const disponivel = "#F3F3F3"; // cor de fundo dos quadrados disponíveis
 /* ^foram utilizadas constantes para facilitarem o uso dos valores na extensão do código. a quantidade de linhas,
 *colunas e o tamanho do quadrado devem ficar dentro de suas respectivas constantes para facilitar a implementação
