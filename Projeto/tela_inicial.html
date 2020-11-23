@@ -9,6 +9,8 @@
 </head>
 <body>
     <div class="container">
+
+        <!-- Ranking -->
         <div class="ranking-container">
             <p class="title-tela-inicial">Capitetris</p>
             <div class="ranking-card-container">
@@ -44,7 +46,7 @@
                         <img src="./images/trophy.png" class="iconNav" alt="icon_trofeu">
                     </a>
                 </div>
-                <div class="nav_user">
+                <div class="nav_user iconNav">
                     <a href="alteracao.html">
                         <img src="./images/user.png" class="iconNav" alt="icon_usuario">
                     </a>
@@ -52,10 +54,16 @@
             </div>
         </div>
 
-        <!-- Canvas para o tetris -->
+        <div class="start">
+            <button onclick="play()">start</button>
+            <button onclick="set10x20()">10x20</button>
+            <button onclick="set22x44()">22x44</button>
+        </div>
 
+        <!-- Canvas para o tetris -->
         <canvas id="tetris-canvas" width="300" height="600"></canvas>
 
+        <!-- Dados do Jogo -->
         <div class="game-data">
             <div class="next-piece"></div>
             <div class="level">
@@ -78,8 +86,6 @@
     </div>
 
     <script src="./scripts/game.js"></script>
-    <script>
-        
-    </script>
+    
 </body>
 </html>
