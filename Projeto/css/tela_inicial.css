@@ -162,6 +162,8 @@ p.content-game-data{
 }
 
 .iconNav {
+    position: relative;
+    top: -10px;
     transition: transform .25s ease-in;
 }
 

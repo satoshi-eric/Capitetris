@@ -150,37 +150,14 @@ const ctx = cvs.getContext("2d");  //retorna um contexto de desenho para canvas
 const nivelJogador = document.getElementsByClassName("content-game-data")[0];
 const pontosJogador = document.getElementsByClassName("content-game-data")[1];
 const linhasJogador = document.getElementsByClassName("content-game-data")[2];
-const tempoJogador = document.getElementsByClassName("content-game-data")[3];
+
 
 // Variáveis para controle de dados da partida
 let nivel = 1;
 let pontos = 0;
 let linhas = 0;
-let segundos = 0;
 
-// Função para calcular o tempo de partida
-let tempoPartida = function(segundos) {
-    let sec = 0;
-    let min = 0;
-
-    if (segundos < 60) {
-        sec = segundos.toFixed(0);
-    } else if (segundos < 3600) {
-        sec = (segundos % 60).toFixed(0);
-        min = (segundos / 60).toFixed(0);
-    }
-
-    if (sec < 10 && min < 10) {
-        return `0${min}:0${sec}`
-    } else if (sec >= 10 && min < 10) {
-        return `0${min}:${sec}`
-    } else if (sec < 10 && min >= 10) {
-        return `${min}:0${sec}`
-    } else {
-        return `${min}:${sec}`
-    }
-}
-
+// função para calcular a velocidade do jogo. Qunato maior o nível, menor o tempo em que as peças demoram a cair.
 let tempoDificuldade = function(nivel) {
     if (nivel >= 20) {
         return 50;
@@ -189,14 +166,34 @@ let tempoDificuldade = function(nivel) {
     }
 }
 
-const linha = 20;
-const coluna = COLUMN = 10;
-const tamQuadrado = squareSize = 30;
+let linha = 20;
+let coluna = COLUMN = 10;
+let tamQuadrado = squareSize = 30;
 const disponivel = "#F3F3F3"; // cor de fundo dos quadrados disponíveis
 /* ^foram utilizadas constantes para facilitarem o uso dos valores na extensão do código. a quantidade de linhas,
 *colunas e o tamanho do quadrado devem ficar dentro de suas respectivas constantes para facilitar a implementação
 *dos dois tipos de tabuleiros
 */
+
+function set10x20() {
+    linha = 20
+    coluna = COLUMN = 10
+    desenharTabuleiro()
+}
+
+function set22x44() {
+    linha = 44
+    coluna = COLUMN = 22
+    tamQuadrado = squareSize = 13.636363636363635
+    desenharTabuleiro()
+}
+
+function rotateGame() {
+    cvs.style.transform = "rotate(180deg)"
+}
+function rotateReverse() {
+    cvs.style.transform = "rotate(0deg)"
+}
 
 function desenharQuadrado(x,y,cor) {
     ctx.fillStyle = cor;
@@ -503,4 +500,47 @@ function descidaPeca(){
 * subiu todas as linhas
 */
 
-descidaPeca(); // chama a função de descida da peça automaticamente quando o código é executado
+
+// Função para calcular o tempo de partida
+let convertSecToMin = function(segundos) {
+    let sec = 0;
+    let min = 0;
+
+    if (segundos < 60) {
+        sec = segundos.toFixed(0);
+    } else if (segundos < 3600) {
+        sec = (segundos % 60).toFixed(0);
+        min = (segundos / 60).toFixed(0);
+    }
+
+    if (sec < 10 && min < 10) {
+        return `0${min}:0${sec}`
+    } else if (sec >= 10 && min < 10) {
+        return `0${min}:${sec}`
+    } else if (sec < 10 && min >= 10) {
+        return `${min}:0${sec}`
+    } else {
+        return `${min}:${sec}`
+    }
+}
+
+const tempoJogador = document.getElementsByClassName("content-game-data")[3];
+
+let segundos = 0
+let tempo
+
+
+let showTime = function() {
+    segundos++
+    tempo = convertSecToMin(segundos);
+    tempoJogador.innerHTML = tempo;
+}
+
+let updateTime = function() {
+    setInterval(showTime, 1000)
+}
+
+function play() {
+    descidaPeca() // chama a função de descida da peça automaticamente quando o código é executado
+    updateTime()
+}
