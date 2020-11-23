@@ -1,0 +1,210 @@
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+body{
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+    background-color: #242424;
+    font-family: 'Press Start 2P', cursive;
+    outline: none;
+}
+
+div.container{
+    display: flex;
+    flex-direction: row;
+    height: 100vh;
+}
+
+div.container > div.ranking-container{
+    flex: 25%;
+    display: flex;
+    flex-direction: column;
+    /* justify-content: center; */
+    padding: 0px 10px;
+    /* background-color: green; */
+}
+
+div.container > div.ranking-container > div.ranking-card-container{
+    flex: 90%;
+}
+
+div.container > div.ranking-container > div.ranking-card-container > div.card-ranking{
+    width: 90%;
+    border: none;
+    background-color: #ffffff;
+    box-shadow: 5px 5px #B388EB;
+    padding: 5px;
+    margin: 10px 0px;
+    transition: .3s ease-in-out;
+    cursor: pointer;
+
+}
+
+div.container > div.ranking-container > div.ranking-card-container > div.card-ranking:hover{
+    width: 95%;
+}
+
+div.container > div.ranking-container > div.ranking-card-container > div.card-ranking > p{
+    font-size: 12px;
+    color: #212121;
+}
+
+div.container > div.ranking-container > p.title-tela-inicial{
+    margin: 30px 0px;
+    padding: 0px;    
+    font-size: 25px;
+    text-shadow: 10px 10px #B388EB;
+    color: #ffffff;
+    text-align: center;
+    -webkit-text-stroke-width: 2px;
+    -webkit-text-stroke-color: #000000;
+
+    flex: 5%;
+}
+
+div.container > div.ranking-container > div.navigation{
+    /* background-color: #fff; */
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+div.container > div.ranking-container > div.navigation > div{
+    /* background-color: red; */
+    width: 70px;
+    height: 70px;
+    margin: 0px 10px;
+    cursor: pointer;
+
+    display: flex;
+    /* justify-content: center; */
+    align-items: center;
+    color: #ffffff;
+    flex: 5%;
+}
+
+div.container > div.ranking-container > div.navigation > div > img{
+    width: 50%;
+    object-position: center;
+    object-fit: cover;
+}
+
+div.container > div.ranking-container > div.navigation > div.back{
+    font-size: 30px;
+}
+
+div.navigation > div.nav_ranking > img {
+    position: relative;
+    top: -15px;
+} 
+
+div.container > div.tabuleiro{
+    margin-top: 30px;
+    width: 320px;
+    height: 600px;
+    /* margin-top: 30px; */
+    display:inline;
+    /* border: 1px solid red; */
+    background-color: aqua;
+}
+
+div.container > div.game-data{
+    flex: 30%;
+    display: flex;
+    flex-direction: column;
+    padding: 0px 10px;
+    /* justify-content: center; */
+    /* background-color: yellow; */
+}
+
+
+div.container > div.game-data > div.next-piece{
+    width: 80%;
+    box-shadow: 5px 5px #B388EB;
+    height: 35%;
+    margin: 30px 0px;
+    background-color: #393939;
+}
+
+div.container > div.game-data > button{
+    width: 50%;
+    background-color: #b388eb;
+    padding: 10px 20px;
+    border: 2px solid #000;
+    cursor: pointer;
+    outline: none;
+    transition: .3s ease-in-out;
+    -webkit-text-stroke-width: 1.5px;
+    -webkit-text-stroke-color: black;
+    transition: .3s ease-in-out;
+    color: #fff;
+    font-size: 20px;
+    font-family: 'Press Start 2P', cursive;
+}
+
+div.container > div.game-data > button:hover{
+    box-shadow: 5px 10px #000;
+}
+
+div.level,
+div.score,
+div.lines,
+div.time
+{
+    /* border: 1px solid red; */
+    display:flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 0px 10px;
+}
+
+p.title-game-data{
+    font-size: 24px;
+    color: #ffffff;
+    text-shadow: 5px 5px #B388EB;
+    -webkit-text-stroke-width: 2px;
+    -webkit-text-stroke-color: #000000;
+}
+
+p.content-game-data{
+    color: #ffffff;
+    text-shadow: 5px 5px #B388EB;
+    -webkit-text-stroke-width: 1px;
+    -webkit-text-stroke-color: #000000;
+}
+
+.quadrado{
+    width: 30px;
+    height: 30px;
+    border: 1px solid #ddd;
+
+    float: left;
+    background-color: white;
+}
+
+.iconNav {
+    position: relative;
+    top: -10px;
+    transition: transform .25s ease-in;
+}
+
+.iconNav:hover {
+    transform: scale(1.04, 1.04);
+}
+
+#tetris-canvas {
+    position: relative;
+    top: 40px;
+    display: block;
+    margin:0 auto;
+    width: 300px;
+    height: 600px;
+}
+
+#tetris-canvas > div {
+    font-size: 25px;
+    font-weight: bold;
+    font-family: monospace;
+    text-align: center;
+}

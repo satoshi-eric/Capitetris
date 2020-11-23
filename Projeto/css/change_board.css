@@ -1,0 +1,60 @@
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+*{
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+
+    font-family: 'Press Start 2P', cursive;
+}
+
+div.change-board{
+    width: 100%;
+    height: 100vh;
+
+    background-image: url('../images/bkg.jpeg');
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+div.change-board > h1{
+    color: #fff;
+    padding: 17px;
+    text-shadow: 3px 3px 0 #b388eb;
+    -webkit-text-stroke-width: 1px;
+    -webkit-text-stroke-color: black;
+}
+
+div.change-board > div.painel-btn{
+    display: flex;
+    flex-flow: wrap row;
+    justify-content: space-around;
+
+    width: 50%;
+    margin-top: 5%;
+}
+
+div.change-board > div.painel-btn > button{
+    background-color: #b388eb;
+    padding: 10px 20px;
+    border: 2px solid #000;
+    cursor: pointer;
+    outline: none;
+    transition: .3s ease-in-out;
+    -webkit-text-stroke-width: 2px;
+    -webkit-text-stroke-color: black;
+}
+
+div.change-board > div.painel-btn > button:hover{
+    box-shadow: 5px 10px #000;
+}
+
+div.change-board > div.painel-btn > button > a{
+    color: #fff;
+    text-decoration: none;
+    font-size: 25px;
+}
+
