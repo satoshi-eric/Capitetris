@@ -175,7 +175,7 @@ p.content-game-data{
     display: block;
     margin:0 auto;
     width: 300px;
-    height: 900px;
+    height: 600px;
 }
 
 #tetris-canvas > div {

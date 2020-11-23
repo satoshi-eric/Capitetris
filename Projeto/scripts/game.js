@@ -145,11 +145,53 @@ const G = [
 
 const cvs = document.getElementById("tetris-canvas");  //constante cvs pega o id de canvas no doc hmtl
 const ctx = cvs.getContext("2d");  //retorna um contexto de desenho para canvas
-const pontosJogador = document.getElementsByClassName("content-game-data")[0];
+
+// Elementos HTML dos dados da partida. Pontuação, nível, linhas
+const nivelJogador = document.getElementsByClassName("content-game-data")[0];
+const pontosJogador = document.getElementsByClassName("content-game-data")[1];
+const linhasJogador = document.getElementsByClassName("content-game-data")[2];
+const tempoJogador = document.getElementsByClassName("content-game-data")[3];
+
+// Variáveis para controle de dados da partida
+let nivel = 1;
+let pontos = 0;
+let linhas = 0;
+let segundos = 0;
+
+// Função para calcular o tempo de partida
+let tempoPartida = function(segundos) {
+    let sec = 0;
+    let min = 0;
+
+    if (segundos < 60) {
+        sec = segundos.toFixed(0);
+    } else if (segundos < 3600) {
+        sec = (segundos % 60).toFixed(0);
+        min = (segundos / 60).toFixed(0);
+    }
+
+    if (sec < 10 && min < 10) {
+        return `0${min}:0${sec}`
+    } else if (sec >= 10 && min < 10) {
+        return `0${min}:${sec}`
+    } else if (sec < 10 && min >= 10) {
+        return `${min}:0${sec}`
+    } else {
+        return `${min}:${sec}`
+    }
+}
+
+let tempoDificuldade = function(nivel) {
+    if (nivel >= 20) {
+        return 50;
+    } else {
+        return 1000 - (nivel * 50);
+    }
+}
 
 const linha = 20;
 const coluna = COLUMN = 10;
-const tamQuadrado = squareSize = 20;
+const tamQuadrado = squareSize = 30;
 const disponivel = "#F3F3F3"; // cor de fundo dos quadrados disponíveis
 /* ^foram utilizadas constantes para facilitarem o uso dos valores na extensão do código. a quantidade de linhas,
 *colunas e o tamanho do quadrado devem ficar dentro de suas respectivas constantes para facilitar a implementação
@@ -330,6 +372,7 @@ Peca.prototype.rotacionar = function(){
 */
 
 let pontuacao = 0; // inicializa a pontuação do jogador em 0 pts.
+let pontuacaoControle = 0
 
 Peca.prototype.manter = function() {
     for( r = 0; r < this.tetrominoAtivo.length; r++) {
@@ -368,11 +411,20 @@ Peca.prototype.manter = function() {
             }
 
             pontuacao += 10; // usuário removeu uma linha, então sua pontuação aumenta em 10 pts.
+            linhas++
         }
     }
     desenharTabuleiro(); // atualiza o tabuleiro
 
     pontosJogador.innerHTML = pontuacao; // atualiza a pontuação atual do jogador
+    
+    
+    linhasJogador.innerHTML = linhas;
+    if (pontuacao % 300 === 0 && pontuacao != 0 && pontuacao > pontuacaoControle) {
+        nivel++;
+        pontuacaoControle += 300;
+        nivelJogador.innerHTML = nivel;
+    }
 }
 /* ^a função manter será resposnável por salvar a peça em sua posição de parada */
 
@@ -435,7 +487,7 @@ let gameOver = false; // começa em false pq se não.. bom.. né, acabou *O JOGO
 function descidaPeca(){
     let now = Date.now();
     let delta = now - retomadaDescida;
-    if(delta > 1000){ // executa a função após 1000ms ou 1s
+    if(delta > tempoDificuldade(nivel)){ // executa a função após o tempo atual da dificuldade do jogo
         p.abaixar(); // recalcula altura y da pecinha
         retomadaDescida = Date.now(); // atualiza timing
     }
