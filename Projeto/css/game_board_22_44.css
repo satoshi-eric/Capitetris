@@ -36,8 +36,6 @@ div.container > div.ranking-container > div.ranking-card-container > div.card-ra
     padding: 5px;
     margin: 10px 0px;
     transition: .3s ease-in-out;
-    cursor: pointer;
-
 }
 
 div.container > div.ranking-container > div.ranking-card-container > div.card-ranking:hover{
