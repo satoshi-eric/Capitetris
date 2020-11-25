@@ -1,547 +1,469 @@
-/* ****************** peças e suas variações ****************** */
 
-/* as matrizes representam o formato de cada peça do tabuleiro. cada peça é formada
-* por um conjunto de 1s
-*/
+const canvas = document.getElementById("tetris-canvas");
+const context = canvas.getContext("2d");
 
-const A = [
-    [
-        [0, 0, 0, 0],
-        [1, 1, 1, 1],
-        [0, 0, 0, 0],
-        [0, 0, 0, 0],
-    ],
-    [
-        [0, 0, 1, 0],
-        [0, 0, 1, 0],
-        [0, 0, 1, 0],
-        [0, 0, 1, 0],
-    ],
-    [
-        [0, 0, 0, 0],
-        [0, 0, 0, 0],
-        [1, 1, 1, 1],
-        [0, 0, 0, 0],
-    ],
-    [
-        [0, 1, 0, 0],
-        [0, 1, 0, 0],
-        [0, 1, 0, 0],
-        [0, 1, 0, 0],
-    ]
-];
+context.scale(30, 30); //modifica a escala dos valores -> ao invez do quadrado ser 1px é de 20px
 
-const B = [
-    [
-        [1, 0, 0],
-        [1, 1, 1],
-        [0, 0, 0]
-    ],
-    [
-        [0, 1, 1],
-        [0, 1, 0],
-        [0, 1, 0]
-    ],
-    [
-        [0, 0, 0],
-        [1, 1, 1],
-        [0, 0, 1]
-    ],
-    [
-        [0, 1, 0],
-        [0, 1, 0],
-        [1, 1, 0]
-    ]
-];
+let linhas = 20;
+let colunas = 10;
+let xPos = 5;
+let yPos = 0;
+let bigMatrix = false; //verdadeiro caso o usuário escolha pelo tabuleiro grande
 
-const C = [
-    [
-        [0, 0, 1],
-        [1, 1, 1],
-        [0, 0, 0]
-    ],
-    [
-        [0, 1, 0],
-        [0, 1, 0],
-        [0, 1, 1]
-    ],
-    [
-        [0, 0, 0],
-        [1, 1, 1],
-        [1, 0, 0]
-    ],
-    [
-        [1, 1, 0],
-        [0, 1, 0],
-        [0, 1, 0]
-    ]
-];
+if (bigMatrix == true) {
+    linhas = 44;
+    colunas = 22;
+    xPos = 21;
+    context.scale(0.455, 0.455);
+} //seta os valores apropriados para a matriz maior
 
-const D = [
-    [
-        [0, 0, 0, 0],
-        [0, 1, 1, 0],
-        [0, 1, 1, 0],
-        [0, 0, 0, 0],
-    ]
-];
+let inverted = false;
 
-const E = [
-    [
-        [1, 0, 1],
-        [1, 1, 1],
-        [0, 0, 0]
-    ],
-    [
-        [0, 1, 1],
-        [0, 1, 0],
-        [0, 1, 1]
-    ],
-    [
-        [0, 0, 0],
-        [1, 1, 1],
-        [1, 0, 1]
-    ],
-    [
-        [1, 1, 0],
-        [0, 1, 0],
-        [1, 1, 0]
-    ]
-];
+function limparLinha() {
+    let contagemLinhas = 1;
+        outer: for (let y = arena.length -1; y > 0; --y) 
+        {
+            let n = arena[y].includes(7);
+            for (let x = 0; x < arena[y].length; ++x) 
+            {
+                if (arena[y][x] === 0) 
+                { //se tiver zero, não esta populada
+                    continue outer; //então cntinua
+                } 
+            }
+            const row = arena.splice(y, 1)[0].fill(0);
+            arena.unshift(row);
+            y++;
 
-const F = [
-    [
-        [0, 1, 0],
-        [1, 1, 1],
-        [0, 0, 0]
-    ],
-    [
-        [0, 1, 0],
-        [0, 1, 1],
-        [0, 1, 0]
-    ],
-    [
-        [0, 0, 0],
-        [1, 1, 1],
-        [0, 1, 0]
-    ],
-    [
-        [0, 1, 0],
-        [1, 1, 0],
-        [0, 1, 0]
-    ]
-];
+            if (n === true) 
+            {
+                if (inverted === false)
+                {
+                    canvas.style.transform = "rotate(180deg)"
+                    inverted = true
+                }
+                else
+                {
+                    canvas.style.transform = "rotate(0deg)"
+                    inverted = false
+                }
+            }
 
-const G = [
-    [
-        [0, 0, 0],
-        [0, 1, 0],
-        [0, 0, 0]
-    ],
-];
+            jogador.pontos += contagemLinhas * 10;
+            contagemLinhas *= 2;
+        }
+    }
+/**
+ * a função limparLinha vai iterar sobre as linhas e colunas da matriz principal do jogo em busca de algum valor
+ * que seja zero. Caso encontre, a função se repete até que todos os valores encontrados na linha sejam diferentes 
+ * de zero. Se encontrar uma linha completamente cheia, ela então "zera" todos o svalores desta linha e muda a posição
+ * das outras peças 1 quadrado abaixo. Procura também pela peça especial (valor 7) nas linhas. Caso encontre ('n === true')
+ * rotaciona a canvas em 180 graus (caso o jogo não esteja invertido) ou volta p posição original caso o jogo ja esteja
+ * invertido. Adiciona 10 pts para cada linha removida e dobra o valor para multiplas linhas
+ */
 
+function colidir(arena, jogador) {
+    const [m, o] = [jogador.matriz, jogador.pos];
+    for (let y = 0; y < m.length; ++y) {
+        for (let x = 0; x < m[y].length; ++x){
+            if (m[y][x] !== 0 && 
+                (arena[y + o.y] && 
+                arena [y + o.y][x + o.x]) !== 0){
+                return true; 
+            }
+        }
+    }
+    return false;
+}
+/**
+ * a função colidir utiliza a tupla para resgatar os valores de posição do jogador e matriz. Verifica então se a linha e coluna
+ * possuem valores diferentes de 0 e se ultrapassará os limites da matriz. Caso haja colisão, retorna 'true'. Caso não haja
+ * colisão, retorna o valor de 'false'.
+ * @param (arena, jogador)
+ */
 
-/* **************** código **************** */
+function criarMatriz(linhas, colunas) {
+    const matriz = [];
+    while (linhas--) {
+        matriz.push(new Array(colunas).fill(0))
+    }
+    return matriz;
+}
+/* é responsável por criar a matriz que armazenará a posição percorrida
+pelo tetrominó ativo e depois armazenará sua posição final. POde variar
+de tamanho dependendo da escolha de tamanho de tabuleuro do jogador*/
 
-const cvs = document.getElementById("tetris-canvas");  //constante cvs pega o id de canvas no doc hmtl
-const ctx = cvs.getContext("2d");  //retorna um contexto de desenho para canvas
+function criarTetromino(tipo) { 
+    if (tipo === 'O') {
+        return [
+            [1, 1],
+            [1, 1],
+        ];
+    } else if (tipo === 'I'){
+        return [
+            [0, 2, 0, 0],
+            [0, 2, 0, 0],
+            [0, 2, 0, 0],
+            [0, 2, 0, 0],
+        ];
+    } else if (tipo === 'L'){
+        return [
+            [0, 3, 0],
+            [0, 3, 0],
+            [0, 3, 3],
+        ];
+    } else if (tipo === 'J'){
+        return [
+            [0, 4, 0],
+            [0, 4, 0],
+            [4, 4, 0],
+        ];
+    } else if (tipo === 'T'){
+        return [
+            [5, 5, 5],
+            [0, 5, 0],
+            [0, 0, 0],
+        ];
+    } else if (tipo === 'U'){
+        return [
+            [0, 0, 0],
+            [6, 0, 6],
+            [6, 6, 6],
+        ];
+    } else if (tipo === 'D'){
+        return [
+            [7],
+        ];
+    }
+}
+/**
+ * a função criarTetromino cria um diferente tetrominó dependendo da letra que é passada como parâmetro. Cada letra representa uma peça e
+ * o array de cada peça possui valores diferentes para fazer a distinção entre as cores das peças. Todas as matrizes
+ * são quadradas para facilitar a rotação delas sobre seu proprio eixo
+ * @param tipo
+ * 
+ * @return array
+ */
 
-// Elementos HTML dos dados da partida. Pontuação, nível, linhas
-const nivelJogador = document.getElementsByClassName("content-game-data")[0];
-const pontosJogador = document.getElementsByClassName("content-game-data")[1];
-const linhasJogador = document.getElementsByClassName("content-game-data")[2];
+const cores = [
+    null,
+    '#90DDF0',
+    '#FE938C',
+    '#B388EB',
+    '#FFF282',
+    '#7BF1A8',
+    '#F0B890',
+    '#FE4BC1',
+] //especifica cores p cada peça
 
+function desenhar() {
+    context.fillStyle = "#393939";
+    context.fillRect(0, 0, canvas.width, canvas.height); //preenche o tabuleiro com a cor branca
+    desenharMatriz(arena, {x: 0, y: 0});
+    desenharMatriz(jogador.matriz, jogador.pos);
+}
+/**
+ * a função desenhar primeiramente inicializa o tabuleiro com a cor branca e depois vai desenhar o tetrominó
+ * seguindo os parametros passados por jogador.matriz e jogador.pos, além de deixar desenhado as peças previsamente
+ * salvas, dicado pela função (arena, {x: 0, y: 0})
+ */
 
-// Variáveis para controle de dados da partida
-let nivel = 1;
-let pontos = 0;
-let linhas = 0;
+function desenharMatriz(matriz, offset) {
+    matriz.forEach((row, y) => {
+        row.forEach((value, x) => {
+            if(value !== 0) {
+                context.fillStyle = cores[value];
+                context.fillRect(x + offset.x, 
+                                    y + offset.y, 
+                                    0.95, 0.95);
+            }
+        });
+    });
+    
+    var w = 200; //w e h mudam conforme o
+    var h = 400;
+    var clear = 1; 
 
-// função para calcular a velocidade do jogo. Qunato maior o nível, menor o tempo em que as peças demoram a cair.
-let tempoDificuldade = function(nivel) {
+    context.beginPath();
+    for (var x=0;x<=w;x+=clear) {
+        context.moveTo(x, 0);
+        context.lineTo(x, h);
+    }
+    context.strokeStyle = '#242424';
+    context.lineWidth = 0.05;
+    context.stroke();
+
+    //horizontal
+    context.beginPath(); 
+    for (var y=0;y<=h;y+=clear) {
+        context.moveTo(0, y);
+        context.lineTo(w, y);
+    }
+    context.strokeStyle = '#242424';
+    context.lineWidth = 0.05;
+    context.stroke();
+
+    matriz.forEach((row, y) => {
+        row.forEach((value, x) => {
+            if(value !== 0) {
+                context.fillStyle = cores[value];
+                context.fillRect(x + offset.x, 
+                                 y + offset.y, 
+                                 0.95, 0.95);
+            }
+        });
+    });
+}
+/**
+ * a função desenharMatriz vai iterar sobre a matriz passada à ela por meio do parametro (matriz) para desenhar
+ * seu formato na tela, atribuindo uma cor a cada bloco de cor diferente de 0. Inclui também um valor de offset
+ * para dar 'kickback' na peça no caso de durante a rotação, ela colidir
+ * @param (matriz, offset)
+ */
+
+function integrar (arena, jogador) {
+    jogador.matriz.forEach((row, y) => {
+        row.forEach((value, x) => {
+            if (value !== 0) {
+                arena[y + jogador.pos.y][x + jogador.pos.x] = value;
+            }
+        });
+    });
+}
+/**
+ * a função integrar vai integrar os dados do jogador com a matriz de 'arena', onde ficam salvas as posições das peças
+ * @param (arena, jogador)
+ */
+
+function descidaJogador() {
+    jogador.pos.y++;
+    if (colidir(arena, jogador)) {
+        jogador.pos.y--;
+        integrar(arena, jogador);
+        setarTetromino();
+        limparLinha();
+        atualizarScore();
+    }
+    contadorQueda = 0;
+}
+/**
+ * a função descidaJogador vai abaixar a posição da peça em 1 unidade e verificará se há a colisão da peça com outra
+ * previamente salva em 'arena' (a matriz geral). Caso haja, a posição é decrescida em 1 unidade, então a peça fica 
+ * no mesmo lugar inicial. Caso não haja colisão, vamos integrar a peça com a matriz 'arena', requisitaremos uma nova
+ * peça por setarTetromino, requisita a função limparLinha para analisar se há alguma linha preenchida abaixo e atualiza
+ * a pontuação do jogador
+ */
+
+function moverJogador(dir) {
+    jogador.pos.x += dir;
+    if (colidir(arena, jogador)){
+        jogador.pos.x -= dir;
+    }
+} //sinistro.. <- real, olá :D
+/**
+ * a função moverJogador vai mover o jogador da direita para a esquerda, aumentando o valor de sua posição x. Caso haja 
+ * colisão, a posição decresce da mesma quantidade em que aumentou e retorna a sua posição original.
+ * @param dir
+ */
+
+function setarTetrominoInicial() {
+    const pecinhas = 'OILTJUD';
+    
+    for (let y = arena.length -1; y >= 0; --y) {
+        for (let x = 0; x < arena[y].length; ++x) {
+            if (arena[y][x] === 0) {
+                jogador.matriz = criarTetromino(pecinhas[pecinhas.length * Math.random() | 0]);
+            } 
+        }
+    }
+    jogador.pos.y = 0;
+    jogador.pos.x = (arena[0].length / 2 | 0) - 
+                    (jogador.matriz[0].length / 2 | 0);
+    if (colidir(arena, jogador)){
+        arena.forEach(row => row.fill(0));
+        jogador.pontos = 0;
+        atualizarScore();
+    }
+}
+/**
+ * a função setarTetrominoInicial é necessaria para que podemos iniciar qual tetromino será o primeiro da rodada, uma
+ * vez que a função setarTetromino age como um 'buffer' de peças, mostrando qual será a proxima. Aqui, vamos iterar sobre
+ * toda a matriz 'arena' para garantir que ela está 'limpa' ou totalmente preenchida com zeros. Caso esteja, poderemos 
+ * selecionar uma das peças dentro as disponíveis ('OILTJUD'). Setaremos então a posição vertical do jogador como 0 e a
+ * posição horizontal do jogador na metade aproximada do tabuleiro. Após, é invocada a função colidir, passando como 
+ * parametros arena para zerarmos todas as posições da matriz (para não haver conflitos com os jogos anteriores) e setamos
+ * a pontuação atual como zero (jogo novo).
+ */
+
+let imagem = document.querySelector('#imagem');
+
+function setarTetromino() {
+    
+    const pecinhas = 'OILTJUD';
+    jogador.matriz = criarTetromino(pecinhas[pecinhas.length * Math.random() | 0]);
+    //document.getElementById('prox-tetromino').innerText = jogador.matriz //mostra qual será o proximo tetromino a cair
+    for (let y = 0; y < jogador.matriz.length; ++y) {
+        if (jogador.matriz[y].includes(1)) {
+            imagem.src = '../images/1.svg';
+        } else if (jogador.matriz[y].includes(2)) {
+            imagem.src = '../images/2.svg';
+        } else if (jogador.matriz[y].includes(3)) {
+            imagem.src = '../images/3.svg';
+        } else if (jogador.matriz[y].includes(4)) {
+            imagem.src = '../images/4.svg';
+        } else if (jogador.matriz[y].includes(5)) {
+            imagem.src = '../images/5.svg';
+        } else if (jogador.matriz[y].includes(6)) {
+            imagem.src = '../images/6.svg';
+        } else if (jogador.matriz[y].includes(7)) {
+            imagem.src = '../images/7.svg';
+        }
+    }
+    jogador.pos.y = 0;
+    jogador.pos.x = (arena[0].length / 2 | 0) - 
+                    (jogador.matriz[0].length / 2 | 0);
+    if (colidir(arena, jogador)){
+        arena.forEach(row => row.fill(0));
+        jogador.pontos = 0;
+        atualizarScore();
+    }
+}
+/**
+ * a função setarTetromino é muito parecida com a função setarTetrominoInicial. O principal diferencial é que ela age
+ * como um 'buffer' de peças para satisfazer a função de mostrar a peça seguinte
+ */
+
+function rotacJogador(dir) {
+    const pos = jogador.pos.x;
+    let offset = 1;
+    rotac(jogador.matriz, dir);
+    while (colidir(arena, jogador)) {
+        jogador.pos.x += offset;
+        offset = -(offset + (offset > 0 ? 1 : -1));
+        if (offset > jogador.matriz[0].length) {
+            rotac(jogador.matriz, -dir);
+            jogador.pos.x = pos;
+            return;
+        }
+    }
+}
+/**
+ * a função criarTetromino cria um diferente tetrominó dependendo da letra que é passada como parâmetro. Cada letra representa uma peça e
+ * o array de cada peça possui valores diferentes para fazer a distinção entre as cores das peças. Todas as matrizes
+ * são quadradas para facilitar a rotação delas sobre seu proprio eixo
+ * @param dir
+ * 
+ * @return bool
+ */
+
+function rotac(matriz, dir) {
+    for (let y = 0; y < matriz.length; ++y) {
+        for (let x = 0; x < y; ++x) {
+            [
+                matriz[x][y],
+                matriz[y][x],
+            ] = [
+                matriz[y][x],
+                matriz[x][y],
+            ];
+        }
+    }
+
+    if (dir > 0) {
+        matriz.forEach(row => row.reverse());
+    } else {
+        matriz.reverse();
+    }
+}
+/**
+ * a função rotac tem a função de rotacionar o tetromino. Para isso, realizaremos a transposição da matriz e, logo
+ * após, sua reversa.
+ * @param (matriz, dir)
+ */
+
+let contadorQueda = 0;
+let intervaloQuedas = 1000; //tempo em ms
+
+let nivel = 1
+let pontuacaoControle = 0
+
+function tempoDificuldade(nivel) {
     if (nivel >= 20) {
         return 50;
     } else {
         return 1000 - (nivel * 50);
     }
 }
-
-let linha = 20;
-let coluna = COLUMN = 10;
-let tamQuadrado = squareSize = 30;
-const disponivel = "#F3F3F3"; // cor de fundo dos quadrados disponíveis
-/* ^foram utilizadas constantes para facilitarem o uso dos valores na extensão do código. a quantidade de linhas,
-*colunas e o tamanho do quadrado devem ficar dentro de suas respectivas constantes para facilitar a implementação
-*dos dois tipos de tabuleiros
-*/
-
-// function set10x20() {
-//     linha = 20
-//     coluna = COLUMN = 10
-//     desenharTabuleiro()
-// }
-
-// function set22x44() {
-//     linha = 44
-//     coluna = COLUMN = 22
-//     tamQuadrado = squareSize = 13.636363636363635
-//     desenharTabuleiro()
-// }
-
-function rotateGame() {
-    cvs.style.transform = "rotate(180deg)"
-}
-function rotateReverse() {
-    cvs.style.transform = "rotate(0deg)"
-}
-
-
-function desenharQuadrado(x,y,cor) {
-    ctx.fillStyle = cor;
-    ctx.fillRect(x*tamQuadrado,y*tamQuadrado,tamQuadrado,tamQuadrado);
-    /* ^para que o quadrado seja desenhado, serão passados os parametros de cor, coordenadas x e y e as dimensões
-    * do quadrado (width & heigth) -- https://www.w3schools.com/tags/canvas_fillstyle.asp
-    */
-
-    ctx.strokeStyle = "#C4C4C4";
-    ctx.strokeRect(x*tamQuadrado,y*tamQuadrado,tamQuadrado,tamQuadrado);
-    // ^propriedades de borda para cada elemento em canvas -- https://www.w3schools.com/tags/canvas_strokerect.asp
-}
-
-let tabuleiro = []; // cria um novo tabuleiro -- no caso, uma array
-
-for( r = 0; r <linha; r++) {
-    tabuleiro[r] = []; //cria as linhas (ou "rows") do tabuleiro
-    for(c = 0; c < coluna; c++){
-        tabuleiro[r][c] = disponivel; //atribuirá a cor branca ("disponível") a todos os quadrados do novo tabuleiro
-    }
-}
-
-function desenharTabuleiro() {
-    for(r = 0; r <linha; r++){
-        for(c = 0; c < coluna; c++){
-            desenharQuadrado(c,r,tabuleiro[r][c]);
-        }
-    }
-}
-/* ^a função desenharTabuleiro será responsável por desenhar este tabuleiro recém criado na tela, exibindo uma série
-*de quadrados em branco (cor de inicialização)
-*/
-
-desenharTabuleiro(); // chama a função construtora do tabuleiro
-
-const TETROMINOS = [ //os tetrominos e suas respectivas cores
-    [A,"#FE938C"],
-    [B,"#B388EB"],
-    [C,"#FFF282"],
-    [D,"#90DDF0"],
-    [E, "#F0B890"],
-    [F,"#7BF1A8"],
-    [G,"#FE4BC1"]
-];
-
-function pecaSortida() {
-    let r = randomN = Math.floor(Math.random() * TETROMINOS.length) // 0 até 6
-    return new Peca( TETROMINOS[r][0],TETROMINOS[r][1]);
-}
-/* ^a função peçaSprtida será responsavel por retornar a nova peça que será exibida. todas as peças têm a mesma
-* probabilidade de aparecerem e são geradas randomicamente
-*/
-
-let p = pecaSortida(); // invoca a função peçaSortida para atribui à "p" a próxima peça a cair
-
-function Peca(tetromino,cor){
-    this.tetromino = tetromino;
-    this.cor = cor;
-
-    this.posicaoTetromino = 0; // partindo do zero, começamos da primeira orientação disponível de cada peça
-    this.tetrominoAtivo = this.tetromino[this.posicaoTetromino]; // é a peça com a qual estaremos jogando
-
-    this.x = 3; // deixa a peça posicionada na metade do tabuleiro
-    this.y = -2;  // deixa a peça posicionada acima do tabuleiro para que só seja vista assim que começa a cair
-}
-/* ^com a função Peça, conseguimos ter controle sobre os tetrominos */
-
-Peca.prototype.fill = function(cor) {
-    for( r = 0; r < this.tetrominoAtivo.length; r++) {
-        for(c = 0; c < this.tetrominoAtivo.length; c++) {
-            if( this.tetrominoAtivo[r][c]){
-                desenharQuadrado(this.x + c,this.y + r, cor); // preencheremos apenas os quadrados ocupados seguindo as coordenadas
-            }
-        }
-    }
-}
-/* ^a função "fill" será responsável por preencher os quadrados que queremos que sejam preenchidos para que seja
-* formado o formato dos tetrominos
-*/
-
-Peca.prototype.exibir = function() {
-    this.fill(this.cor);
-}
-/* ^a função "exibir" irá preencher o quadrado com um atributo de cor */
-
-Peca.prototype.remover = function() {
-    this.fill(disponivel);
-}
-/* ^para que tenhamos movimento e progressão no movimento do tetromino, devemos apagar sua posição original antes de
-*podermos recalcular sua nova posição e o exibir novamente na tela
-*/
-
-Peca.prototype.abaixar = function() {
-    if(!this.temColisao(0,1,this.tetrominoAtivo)){ //aqui, verificaremos se a peça tem colisão com algo em baixo
-        this.remover();
-        this.y++;
-        this.exibir(); // caso não tenha, podemos atualizar sua posição para y+1
-    }
-    else {
-        this.manter();
-        p = pecaSortida(); //caso tenha uma peça abaixo, mantemos a peça no lugar onde ela se encontra e solicitanos uma nova peça
-
-    }
-
-}
-
 /**
- * Como eese não é um tetris comum, ao eliminar a peça especial o tabuleiro será invertido e as peças irão se mover para cima. Para que isso ocorra, precisamos da função para subir o tetromino
+ * a função tempoDificuldade atribui diferentes velocidades a cada nível do jogo. A velocidade do jogo decai de 50
+ * vezes o nuero do nivel do jogador (resultado dado em milissegundos), até chegar va velocidade máxima de 50ms, que 
+ * ocorrerá quando o jogador atinge o nível 20
+ * @param nivel
+ * 
+ * @return int
  */
-Peca.prototype.subir = function() {
-    if(!this.temColisao(0,1,this.tetrominoAtivo)){ //aqui, verificaremos se a peça tem colisão com algo em baixo
-        this.remover();
-        this.y--;
-        this.exibir(); // caso não tenha, podemos atualizar sua posição para y+1
-    }
-    else {
-        this.manter();
-        p = pecaSortida(); //caso tenha uma peça abaixo, mantemos a peça no lugar onde ela se encontra e solicitanos uma nova peça
-    }
 
-}
-
-
-Peca.prototype.moverDireita = function(){
-    if(!this.temColisao(1,0,this.tetrominoAtivo)){
-        this.remover();
-        this.x++;
-        this.exibir();
-    }
-}
-/* ^a função moverDireita irá movimentar a peça para a direita do tabuleiro quando for chamada, caso a peça atual
-*não tenha colisão com outra peça ou limite do canvas
-*/
-
-Peca.prototype.moverEsquerda = function(){
-    if(!this.temColisao(-1,0,this.tetrominoAtivo)){
-        this.remover();
-        this.x--;
-        this.exibir();
-    }
-}
-/* ^a função moverEsquerda irá movimentar a peça para a esquerda do tabuleiro quando for chamada, caso a peça atual
-*não tenha colisão com outra peça ou limite do canvas
-*/
-
-Peca.prototype.rotacionar = function(){
-    let proximaOrientacao = this.tetromino[(this.posicaoTetromino + 1)%this.tetromino.length];
-    /* ^(posiçãoTetromino + 1)%tetromino.length vai resolver o problema de não conseguir acompanhar a mudança de
-    * orientação da peça. fazemos isso para conseguirmos o seguinte: (0+1)%4 => 1, onde 0 = pos. inicial +1 % 4 => 1 (proxima
-    * orientação da peça
-    */
-    let realocar = 0;
-
-    if(this.temColisao(0,0,proximaOrientacao)){ // assim iremos saber onde temos colisão (0, 0 é usado pq a peça rotaciona em seu proprio eixo)
-        if(this.x > coluna/2){ // todo : não entendi aqui, oh!
-            realocar = -1; //como estamos fazendo contato com a coluna direita, devemos relocalizar a peça para a esquerda
-        }else{
-            realocar = 1; // se não, estamos fazendo contato com a coluna esquerda e devemos relocalizar a peça para a direita
-        }
-    }
-
-    if(!this.temColisao(realocar,0,proximaOrientacao)){
-        this.remover();
-        this.x += realocar;
-        this.posicaoTetromino = (this.posicaoTetromino + 1)%this.tetromino.length; // (0+1)%4 => 1
-        this.tetrominoAtivo = this.tetromino[this.posicaoTetromino];
-        this.exibir();
-        /* ^caso a rotação não seja um problema, a peça será realocada e exibida na tela normalmente*/
-    }
-}
-/* ^a função rotação alem de permitir que as pecinhas girem sobre seu proprio eixo, precisa analisar também se a
-* rotação da peça fará com que ela tenha algum contato lateral
-*/
-
-let pontuacao = 0; // inicializa a pontuação do jogador em 0 pts.
-let pontuacaoControle = 0
-
-Peca.prototype.manter = function() {
-    for( r = 0; r < this.tetrominoAtivo.length; r++) {
-        for(c = 0; c < this.tetrominoAtivo.length; c++) {
-            if( !this.tetrominoAtivo[r][c]){
-                continue; // estaremos pulando os quadrados que estiverem vazios
-            }
-            if(this.y + r < 0) { // se a peça for salva numa posição acima de y = 0, então game over -- acabaram-se as linhas
-                alert("Game Over");
-                gameOver = true;
-                break;
-            }
-            tabuleiro[this.y+r][this.x+c] = this.cor; // mas, caso contrário, salvaremos a peça em sua posição
-        }
-    }
-
-    for(r = 0; r < linha; r++){
-        let linhaEstaCheia = true;
-        for( c = 0; c < coluna; c++){
-            linhaEstaCheia = linhaEstaCheia && (tabuleiro[r][c] !== disponivel);
-        }
-        /* ^no evento da linha estar cheia, o programa irá resetar a linha, ou seja, atribuirá "disponível"
-        * aos quadrados que a compõem -- voltarão à cor de fundo normal
-        */
-
-        if(linhaEstaCheia){
-            for( y = r; y > 1; y--){
-                for( c = 0; c < coluna; c++){
-                    tabuleiro[y][c] = tabuleiro[y-1][c];
-                }
-            }
-            /* ^caso a linha esteja cheia, o programa vai descer o tabuleiro -- novo y = y-1 */
-
-            for( c = 0; c < coluna; c++){
-                tabuleiro[0][c] = disponivel; // a linha [0] não tem nenhuma outra linha acima dela
-            }
-
-            pontuacao += 10; // usuário removeu uma linha, então sua pontuação aumenta em 10 pts.
-            linhas++
-        }
-    }
-    desenharTabuleiro(); // atualiza o tabuleiro
-
-    pontosJogador.innerHTML = pontuacao; // atualiza a pontuação atual do jogador
+let tempoAnterior = 0; //vai ser util para sabermos a diferença de tempo entre a queda de uma peça e outra
+function update(tempo = 0) {
+    const deltaTempo = tempo - tempoAnterior;
+    tempoAnterior = tempo;
     
-    
-    linhasJogador.innerHTML = linhas;
-    if (pontuacao % 300 === 0 && pontuacao != 0 && pontuacao > pontuacaoControle) {
+    contadorQueda += deltaTempo;
+    if (contadorQueda > tempoDificuldade(nivel)) {
+        descidaJogador();
+    }
+
+    if (jogador.pontos % 300 === 0 && jogador.pontos != 0 && jogador.pontos > pontuacaoControle) {
         nivel++;
         pontuacaoControle += 300;
-        nivelJogador.innerHTML = nivel;
-    }
-}
-/* ^a função manter será resposnável por salvar a peça em sua posição de parada */
-
-Peca.prototype.temColisao = function(x,y,peca) {
-    for( r = 0; r < peca.length; r++) {
-        for(c = 0; c < peca.length; c++) {
-            if(!peca[r][c]) { // verifica se o campo está livre. se estiver, nada será feito
-                continue;
-            }
-            let xAtualizado = this.x + c + x;
-            let yAtualizado = this.y + r + y; // armazena as coordenadas atualizadas da peça após a movimentação
-
-            if(yAtualizado < 0) {
-                continue;
-            } // yAtualizado deve ser maior que y, se não, isso indica que acabaram as linhas
-
-            if(xAtualizado < 0 || xAtualizado >= coluna || yAtualizado >= linha){
-                return true;
-            }
-            /*^nesta parte, estaremos analizando se a peça não está ultrapassando a margem da canvas pela direita
-            * (ou seja, x < 0), pela esquerda (ou seja, x > coluna) e/ou por baixo (ou seja, y > linha)
-            */
-
-            if( tabuleiro[yAtualizado][xAtualizado] !== disponivel){
-                return true; // checa se já não há uma peça no determinado lugar. caso não, é retornado o vcalor de verdadeiro -- lugar disponivel!!
-            }
-        }
-    }
-    return false;
-}
-/* ^a função temColisão vai analisar se, após a movimentação da pecinha, há a colisão dela com outra pecinha ou
-* com as margens do tabuleiro */
-
-document.addEventListener("keydown",CONTROL);
-
-function CONTROL(event){
-    if(event.keyCode === 37){
-        p.moverEsquerda();
-        retomadaDescida = Date.now();
-    }else if(event.keyCode === 38){
-        p.rotacionar();
-        retomadaDescida = Date.now();
-    }else if(event.keyCode === 39){
-        p.moverDireita();
-        retomadaDescida = Date.now();
-    }else if(event.keyCode === 40){
-        p.abaixar();
-    }
-}
-/* ^as funções de controle acima esperam o evento de clique do teclado. assim que as setas forem clicadas,
-*cada uma realizará uma função. a seta para cima (de keycode 38) irá rotacionar a peça; a seta para baixo (de
-*key code 40) invocará novamente a função de abaixar, aumentando a velocidade de descida da peça; a seta para a direita
-*(de key code 39) irá movimentar a peça para a direita e a tecla da esquerda (de key code 37) irá movimentar a
-*peça para a esquerda. após cada função ser realizada, é importante que novamente o tempo de descida seja atualizado,
-*pois se não o timing se vai completamente por agua abaixo
-*/
-
-let retomadaDescida = Date.now(); // inicia a descida no momento de agora
-let gameOver = false; // começa em false pq se não.. bom.. né, acabou *O JOGO*
-function descidaPeca(){
-    let now = Date.now();
-    let delta = now - retomadaDescida;
-    if(delta > tempoDificuldade(nivel)){ // executa a função após o tempo atual da dificuldade do jogo
-        p.abaixar(); // recalcula altura y da pecinha
-        retomadaDescida = Date.now(); // atualiza timing
-    }
-    if( !gameOver){
-        requestAnimationFrame(descidaPeca); // informa ao browser que haverá uma animação -- https://developer.mozilla.org/en-US/docs/Web/API/window/requestAnimationFrame
-    }
-}
-/* ^a função "descidaPeça" permite que a peça comece a descer desde o topo, onde a peça fica originalmente
-* escondida (x = -2+ até onde for possível. é feito também o controle da velocidade dessa decida, informando a
-* retomadaDescida o momento atual e depois contando 10000ms (ou 1 segundo) até que a peça desça mais uma linha.
-* É importante que esse controle do tempo seja atualizado ao final do ciclo para que a descida da peça não
-* saia de ordem. é importante também verificar se não foi atingida a condição de game over, ou seja, o jogador
-* subiu todas as linhas
-*/
-
-
-// Função para calcular o tempo de partida
-let convertSecToMin = function(segundos) {
-    let sec = 0;
-    let min = 0;
-
-    if (segundos < 60) {
-        sec = segundos.toFixed(0);
-    } else if (segundos < 3600) {
-        sec = (segundos % 60).toFixed(0);
-        min = (segundos / 60).toFixed(0);
     }
 
-    if (sec < 10 && min < 10) {
-        return `0${min}:0${sec}`
-    } else if (sec >= 10 && min < 10) {
-        return `0${min}:${sec}`
-    } else if (sec < 10 && min >= 10) {
-        return `${min}:0${sec}`
-    } else {
-        return `${min}:${sec}`
+    desenhar();
+    requestAnimationFrame(update);
+}
+
+/* a função update vai atualizar a posição da peça ,chamando a 
+função desenhar e fazendo um request "requestAnimationFrame(self)
+após avaliar se o tempo de espera entre a ultima queda e o momento atual
+for maior que 1000ms (ou 1 seg) e incrementando a posição y do jogador em
+1 unidade, levando em consideração orientação do jogo*/
+/**
+ * a função update vai atualizar a posição da peça, chamando a função desenhar e fazendo um request "requestAnimationFrame(self)"
+ * após avaliar se o tempo de espera entre a última queda e o momento atual for maior que o tempo expresso pelo nivel
+ * de dificuldade atual do jogo, invocando a função descidaJogador. Além disso, é avaliado se a pontuação do jogador
+ * é maior que 0 e se é multipla de 300. Caso seja, o nívelç do jogo será aumentado
+ * @param tempo
+ */
+
+function atualizarScore() {
+    document.getElementById('score').innerText = jogador.pontos
+}
+
+const arena = criarMatriz(linhas, colunas); //cria a matriz geral 'arena' que armazenará as peças salvas
+
+const jogador = {
+    pos: {x: 0, y: 0},
+    matriz: null,
+    pontos: 0,
+}
+
+document.addEventListener('keydown', event => {
+    if (event.keyCode === 37){
+        moverJogador(-1);
+    } else if (event.keyCode === 39){
+        moverJogador(1);
+    } else if (event.keyCode === 40){
+        descidaJogador();
+    } else if (event.keyCode === 38) {
+        rotacJogador(1);
     }
-}
+});
+/**
+ * aqui estaremos realizando diferentes operações caso o usuario pressione as teclas direcionais do teclado, 
+ * resultando na mudança da posição do tetrominó
+ */
 
-const tempoJogador = document.getElementsByClassName("content-game-data")[3];
-
-let segundos = 0
-let tempo
-
-
-let showTime = function() {
-    segundos++
-    tempo = convertSecToMin(segundos);
-    tempoJogador.innerHTML = tempo;
-}
-
-let updateTime = function() {
-    setInterval(showTime, 1000)
-}
-
-function play() {
-    descidaPeca() // chama a função de descida da peça automaticamente quando o código é executado
-    updateTime()
-}
+setarTetrominoInicial();
+setarTetromino();
+atualizarScore();
+update();

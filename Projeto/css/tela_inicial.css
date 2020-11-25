@@ -6,6 +6,7 @@ body{
     box-sizing: border-box;
     background-color: #242424;
     font-family: 'Press Start 2P', cursive;
+    outline: none;
 }
 
 div.container{
@@ -115,12 +116,33 @@ div.container > div.game-data{
     /* background-color: yellow; */
 }
 
+
 div.container > div.game-data > div.next-piece{
     width: 80%;
     box-shadow: 5px 5px #B388EB;
     height: 35%;
     margin: 30px 0px;
     background-color: #393939;
+}
+
+div.container > div.game-data > button{
+    width: 50%;
+    background-color: #b388eb;
+    padding: 10px 20px;
+    border: 2px solid #000;
+    cursor: pointer;
+    outline: none;
+    transition: .3s ease-in-out;
+    -webkit-text-stroke-width: 1.5px;
+    -webkit-text-stroke-color: black;
+    transition: .3s ease-in-out;
+    color: #fff;
+    font-size: 20px;
+    font-family: 'Press Start 2P', cursive;
+}
+
+div.container > div.game-data > button:hover{
+    box-shadow: 5px 10px #000;
 }
 
 div.level,

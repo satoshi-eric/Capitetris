@@ -44,8 +44,7 @@ div.change-board > div.painel-btn > button{
     cursor: pointer;
     outline: none;
     transition: .3s ease-in-out;
-    -webkit-text-stroke-width: 2px;
-    -webkit-text-stroke-color: black;
+    
 }
 
 div.change-board > div.painel-btn > button:hover{
@@ -56,5 +55,7 @@ div.change-board > div.painel-btn > button > a{
     color: #fff;
     text-decoration: none;
     font-size: 25px;
+    -webkit-text-stroke-width: 2px;
+    -webkit-text-stroke-color: black;
 }
 
