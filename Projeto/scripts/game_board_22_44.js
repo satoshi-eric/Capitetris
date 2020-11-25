@@ -94,7 +94,7 @@ function criarMatriz(linhas, colunas) {
 }
 /* é responsável por criar a matriz que armazenará a posição percorrida
 pelo tetrominó ativo e depois armazenará sua posição final. POde variar
-de tamanho dependendo da escolha de tamanho de tabuleuro do jogador*/
+de tamanho dependendo da escolha de tamanho de tabuleiro do jogador*/
 
 function criarTetromino(tipo) { 
     if (tipo === 'O') {
@@ -262,7 +262,7 @@ function moverJogador(dir) {
     if (colidir(arena, jogador)){
         jogador.pos.x -= dir;
     }
-} //sinistro.. <- real, olá :D
+} 
 /**
  * a função moverJogador vai mover o jogador da direita para a esquerda, aumentando o valor de sua posição x. Caso haja 
  * colisão, a posição decresce da mesma quantidade em que aumentou e retorna a sua posição original.
@@ -396,13 +396,20 @@ function rotac(matriz, dir) {
 
 
 
- 
-let contadorQueda = 0;
-let intervaloQuedas = 1000; //tempo em ms
 
+let contadorQueda = 0;
 let nivel = 1
 let pontuacaoControle = 0
 
+
+/**
+ * a função tempoDificuldade atribui diferentes velocidades a cada nível do jogo. A velocidade do jogo decai de 50
+ * vezes o nuero do nivel do jogador (resultado dado em milissegundos), até chegar va velocidade máxima de 50ms, que 
+ * ocorrerá quando o jogador atinge o nível 20
+ * @param nivel nivel atual do jogo
+ * 
+ * @return tempo para a peça cair
+ */
 function tempoDificuldade(nivel) {
     if (nivel >= 20) {
         return 50;
@@ -410,16 +417,18 @@ function tempoDificuldade(nivel) {
         return 1000 - (nivel * 50);
     }
 }
-/**
- * a função tempoDificuldade atribui diferentes velocidades a cada nível do jogo. A velocidade do jogo decai de 50
- * vezes o nuero do nivel do jogador (resultado dado em milissegundos), até chegar va velocidade máxima de 50ms, que 
- * ocorrerá quando o jogador atinge o nível 20
- * @param nivel
- * 
- * @return int
- */
+
 
 let tempoAnterior = 0; //vai ser util para sabermos a diferença de tempo entre a queda de uma peça e outra
+
+/**
+ * a função update vai atualizar a posição da peça, chamando a função desenhar e fazendo um request "requestAnimationFrame(self)"
+ * após avaliar se o tempo de espera entre a última queda e o momento atual for maior que o tempo expresso pelo nivel
+ * de dificuldade atual do jogo, invocando a função descidaJogador. Além disso, é avaliado se a pontuação do jogador
+ * é maior que 0 e se é multipla de 300. Caso seja, o nível do jogo será aumentado
+ * @param tempo
+ */
+
 function update(tempo = 0) {
     const deltaTempo = tempo - tempoAnterior;
     tempoAnterior = tempo;
@@ -429,30 +438,12 @@ function update(tempo = 0) {
         descidaJogador();
     }
 
-    if (jogador.pontos % 300 === 0 && jogador.pontos != 0 && jogador.pontos > pontuacaoControle) {
-        nivel++;
-        pontuacaoControle += 300;
-    }
-
     desenhar();
     requestAnimationFrame(update);
 }
 
 let nivelDisplay = document.querySelector('.level > .content-game-data')
 let linesDisplay = document.querySelector('.lines > .content-game-data')
-
-/* a função update vai atualizar a posição da peça ,chamando a 
-função desenhar e fazendo um request "requestAnimationFrame(self)
-após avaliar se o tempo de espera entre a ultima queda e o momento atual
-for maior que 1000ms (ou 1 seg) e incrementando a posição y do jogador em
-1 unidade, levando em consideração orientação do jogo*/
-/**
- * a função update vai atualizar a posição da peça, chamando a função desenhar e fazendo um request "requestAnimationFrame(self)"
- * após avaliar se o tempo de espera entre a última queda e o momento atual for maior que o tempo expresso pelo nivel
- * de dificuldade atual do jogo, invocando a função descidaJogador. Além disso, é avaliado se a pontuação do jogador
- * é maior que 0 e se é multipla de 300. Caso seja, o nívelç do jogo será aumentado
- * @param tempo
- */
 
 function atualizarScore() {
     document.querySelector('.score > .content-game-data').innerText = jogador.pontos
@@ -473,6 +464,10 @@ const jogador = {
     pontos: 0,
 }
 
+/**
+ * aqui estaremos realizando diferentes operações caso o usuario pressione as teclas direcionais do teclado, 
+ * resultando na mudança da posição do tetrominó
+ */
 document.addEventListener('keydown', event => {
     if (event.keyCode === 37){
         moverJogador(-1);
@@ -484,11 +479,6 @@ document.addEventListener('keydown', event => {
         rotacJogador(1);
     }
 });
-/**
- * aqui estaremos realizando diferentes operações caso o usuario pressione as teclas direcionais do teclado, 
- * resultando na mudança da posição do tetrominó
- */
-
 
  
 // Função para calcular o tempo de partida
