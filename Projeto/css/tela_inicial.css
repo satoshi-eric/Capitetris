@@ -51,8 +51,8 @@ div.container > div.ranking-container > div.ranking-card-container > div.card-ra
 div.container > div.ranking-container > p.title-tela-inicial{
     margin: 30px 0px;
     padding: 0px;    
-    font-size: 25px;
-    text-shadow: 10px 10px #B388EB;
+    font-size: 30px;
+    text-shadow: 3px 3px #B388EB;
     color: #ffffff;
     text-align: center;
     -webkit-text-stroke-width: 2px;
@@ -140,15 +140,16 @@ div.time
 p.title-game-data{
     font-size: 24px;
     color: #ffffff;
-    text-shadow: 5px 5px #B388EB;
+    text-shadow: 3px 3px #B388EB;
     -webkit-text-stroke-width: 2px;
     -webkit-text-stroke-color: #000000;
 }
 
 p.content-game-data{
+    font-size: 24px;
     color: #ffffff;
-    text-shadow: 5px 5px #B388EB;
-    -webkit-text-stroke-width: 1px;
+    text-shadow: 3px 3px #B388EB;
+    -webkit-text-stroke-width: 2px;
     -webkit-text-stroke-color: #000000;
 }
 
