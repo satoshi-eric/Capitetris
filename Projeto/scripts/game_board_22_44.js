@@ -19,6 +19,7 @@ if (bigMatrix == true) {
 } //seta os valores apropriados para a matriz maior
 
 let inverted = false;
+let linhasEliminadas = 0;
 
 function limparLinha() {
     let contagemLinhas = 1;
@@ -52,6 +53,7 @@ function limparLinha() {
 
             jogador.pontos += contagemLinhas * 10;
             contagemLinhas *= 2;
+            ++linhasEliminadas;
         }
     }
 /**
@@ -305,19 +307,19 @@ function setarTetromino() {
     //document.getElementById('prox-tetromino').innerText = jogador.matriz //mostra qual será o proximo tetromino a cair
     for (let y = 0; y < jogador.matriz.length; ++y) {
         if (jogador.matriz[y].includes(1)) {
-            imagem.src = '../images/1.svg';
+            imagem.src = 'images/1.svg';
         } else if (jogador.matriz[y].includes(2)) {
-            imagem.src = '../images/2.svg';
+            imagem.src = 'images/2.svg';
         } else if (jogador.matriz[y].includes(3)) {
-            imagem.src = '../images/3.svg';
+            imagem.src = 'images/3.svg';
         } else if (jogador.matriz[y].includes(4)) {
-            imagem.src = '../images/4.svg';
+            imagem.src = 'images/4.svg';
         } else if (jogador.matriz[y].includes(5)) {
-            imagem.src = '../images/5.svg';
+            imagem.src = 'images/5.svg';
         } else if (jogador.matriz[y].includes(6)) {
-            imagem.src = '../images/6.svg';
+            imagem.src = 'images/6.svg';
         } else if (jogador.matriz[y].includes(7)) {
-            imagem.src = '../images/7.svg';
+            imagem.src = 'images/7.svg';
         }
     }
     jogador.pos.y = 0;
@@ -423,6 +425,9 @@ function update(tempo = 0) {
     requestAnimationFrame(update);
 }
 
+let nivelDisplay = document.querySelector('.level > .content-game-data')
+let linesDisplay = document.querySelector('.lines > .content-game-data')
+
 /* a função update vai atualizar a posição da peça ,chamando a 
 função desenhar e fazendo um request "requestAnimationFrame(self)
 após avaliar se o tempo de espera entre a ultima queda e o momento atual
@@ -438,9 +443,16 @@ for maior que 1000ms (ou 1 seg) e incrementando a posição y do jogador em
 
 function atualizarScore() {
     document.querySelector('.score > .content-game-data').innerText = jogador.pontos
+    linesDisplay.innerHTML = linhasEliminadas
+    // Verificação para aumentar o nível
+    if (jogador.pontos > 0 && jogador.pontos % 300 === 0 && jogador.pontos > pontuacaoControle) {
+        nivel++
+        pontuacaoControle += 300
+        nivelDisplay.innerHTML = nivel
+    }
 }
 
-const arena = criarMatriz(linhas, colunas); //cria a matriz geral 'arena' que armazenará as peças salvas
+let arena = criarMatriz(linhas, colunas); //cria a matriz geral 'arena' que armazenará as peças salvas
 
 const jogador = {
     pos: {x: 0, y: 0},
@@ -464,16 +476,6 @@ document.addEventListener('keydown', event => {
  * resultando na mudança da posição do tetrominó
  */
 
- desenhar()
-
- function play() {
-     
-     setarTetrominoInicial();
-     setarTetromino();
-     atualizarScore();
-     update();
-    updateTime()
- }
 
  
 // Função para calcular o tempo de partida
@@ -514,3 +516,16 @@ let showTime = function() {
 let updateTime = function() {
     setInterval(showTime, 1000)
 }
+
+desenhar()
+
+ function play() {
+     
+    setarTetrominoInicial();
+    setarTetromino();
+    atualizarScore();
+    update();
+    updateTime()
+ }
+
+

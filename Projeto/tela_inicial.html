@@ -4,7 +4,7 @@
     <link rel="shortcut icon" href="./images/favicon.ico"/>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./css/tela_inicial.css" type="text/css">
+    <link rel="stylesheet" href="./css/game_board_22_44.css" type="text/css">
     <title>Capitetris</title>
 </head>
 <body>
@@ -54,12 +54,20 @@
             </div>
         </div>
 
+        <!-- <div class="start">
+            <button onclick="play()">start</button>
+            <button onclick="set10x20()">10x20</button>
+            <button onclick="set22x44()">22x44</button>
+        </div> -->
+
         <!-- Canvas para o tetris -->
         <canvas id="tetris-canvas" width="300" height="600"></canvas>
 
         <!-- Dados do Jogo & Opções de jogo-->
         <div class="game-data">
-            <div class="next-piece"></div>
+            <div class="next-piece">
+                <img src="" id="imagem">
+            </div>
             <div class="level">
                 <p class="title-game-data">Level:</p>
                 <p class="content-game-data">1</p>
