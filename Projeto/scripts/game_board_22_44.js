@@ -384,6 +384,20 @@ function rotac(matriz, dir) {
  * @param (matriz, dir)
  */
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+// parte do eric sz
 let contadorQueda = 0;
 let intervaloQuedas = 1000; //tempo em ms
 
