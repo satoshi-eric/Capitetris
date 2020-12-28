@@ -10,15 +10,15 @@
     <body>
         <div class="container">
             <a href="index.html" class="voltar">&lt;</a>
-            <form action="tela_inicial.html">
+            <form action="./php/main.php" method="POST">
                 <h1>Cadastre-se</h1>
-                <input type="text" name="#" id="cadNome" class="nome" placeholder="Nome" required>
-                <input type="date" name="#" id="cadData" class="data" required>
-                <input type="text" name="#" id="cadCpf" class="cpf" placeholder="CPF" required>
-                <input type="tel" name="#" id="cadTelefone" class="telefone" placeholder="Telefone" required>
-                <input type="email" name="#" id="cadEmail" class="email" placeholder="E-mail" required>
-                <input type="text" name="#" id="cadUsuario" class="usuario" placeholder="Usuário" required>
-                <input type="password" name="#" id="cadSenha" class="senha" placeholder="Senha" required>
+                <input type="text" name="nome" id="cadNome" class="nome" placeholder="Nome" required>
+                <input type="date" name="data_nascimento" id="cadData" class="data" required>
+                <input type="text" name="cpf" id="cadCpf" class="cpf" placeholder="CPF" required>
+                <input type="tel" name="telefone" id="cadTelefone" class="telefone" placeholder="Telefone" required>
+                <input type="email" name="email" id="cadEmail" class="email" placeholder="E-mail" required>
+                <input type="text" name="username" id="cadUsuario" class="usuario" placeholder="Usuário" required>
+                <input type="password" name="password" id="cadSenha" class="senha" placeholder="Senha" required>
                 <input type="submit" class="button" value="Entrar">
             </form>
         </div>
