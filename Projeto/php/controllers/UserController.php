@@ -2,16 +2,16 @@
     include __DIR__."\..\Connection.php";
 
     class UserController{
-        public static function validUser(string $email, string $cpf){
-            $query = "SELECT * FROM tbl_usuario WHERE email = ? OR cpf = ?";
+        public static function validUser(string $username, string $cpf){
+            $query = "SELECT * FROM tbl_usuario WHERE username = ? OR cpf = ?";
             $stm = Connection::getConnection()->prepare($query);
-            $stm->bindValue(1, $email);
+            $stm->bindValue(1, $username);
             $stm->bindValue(2, $cpf);
             $stm->execute();
 
             $usuario = $stm->fetch(PDO::FETCH_ASSOC);
 
-            if($usuario["email"] == $email || $usuario["cpf"] == $cpf){
+            if($usuario["username"] == $username || $usuario["cpf"] == $cpf){
                 return false;
             }else{
                 return true;
@@ -20,7 +20,7 @@
 
         public static function insert(User $user){
             try{
-                if(UserController::validUser($user->getEmail(), $user->getCPF())){
+                if(UserController::validUser($user->getusername(), $user->getCPF())){
                     $insert = "INSERT INTO tbl_usuario(`nome`, `data_nascimento`, `cpf`, `telefone`, `email`, `username`, `password`) VALUES (?, ?, ?, ?, ?, ?, ?);";
                     $stm =  Connection::getConnection()->prepare($insert);
                     $stm->bindValue(1, $user->getNome());
@@ -42,7 +42,7 @@
         }
 
         public static function login(string $username, string $password){
-            $query = "SELECT * FROM tbl_usuario WHERE email = ?;";
+            $query = "SELECT * FROM tbl_usuario WHERE username = ?;";
             $stm = Connection::getConnection()->prepare($query);
             $stm->bindValue(1, $username);
             $stm->execute();

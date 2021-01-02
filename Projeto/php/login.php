@@ -1,8 +1,12 @@
 <?php
-    require_once("./controllers/UserController.php");
+    require_once("./controllers/UserController.php");   
 
     $username = $_POST["username"];
     $password = $_POST["password"];
 
-    UserController::login($username, $password);
+    if (UserController::login($username, $password)) {
+        header("Location: ../change_board.html");   
+    } else {
+        header("Location: ../index.html");
+    }
 ?>
