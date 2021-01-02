@@ -46,12 +46,12 @@
                     </a>
                 </div>
                 <div class="nav_ranking iconNav">
-                    <a href="ranking.html">
+                    <a href="ranking.php">
                         <img src="./images/trophy.png" class="iconNav" alt="icon_trofeu">
                     </a>
                 </div>
                 <div class="nav_user iconNav">
-                    <a href="alteracao.html">
+                    <a href="alteracao.php">
                         <img src="./images/user.png" class="iconNav" alt="icon_usuario">
                     </a>
                 </div>

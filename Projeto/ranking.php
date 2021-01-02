@@ -13,7 +13,7 @@
         <link rel="stylesheet" href="css/ranking.css">
     </head>
     <body>
-        <a href="tela_inicial.html" class="voltar">&lt;</a>
+        <a href="tela_inicial.php" class="voltar">&lt;</a>
         <div class="container">
             <div class="rankingTitle">
                 <img class="imgTrophy" src="./images/trophy.png" alt="troféu">

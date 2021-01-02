@@ -335,8 +335,8 @@ function setarTetromino() {
         console.log("game over")
         let id_usuario = document.getElementById("id_usuario").innerHTML
         console.log("id usuario: ", id_usuario)
+        sendValues(getValues(id_usuario))
         alert(id_usuario)
-        // sendValues(getValues(id_usuario))
     }
 }
 

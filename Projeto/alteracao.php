@@ -13,7 +13,7 @@
 </head>
 <body>
     <div class="container">
-        <a href="tela_inicial.html" class="voltar">&lt;</a>
+        <a href="tela_inicial.php" class="voltar">&lt;</a>
         <form action="#">
             <h1>Alterar informações</h1>
             <input type="text" name="#" id="altNome" class="nome" placeholder="Nome" required>
