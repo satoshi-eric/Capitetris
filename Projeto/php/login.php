@@ -1,8 +1,8 @@
 <?php
     require_once("./controllers/UserController.php");
 
-    $email = "vitor.kogawa.roberto33@example.com";
-    $password = "123456";
+    $username = $_POST["username"];
+    $password = $_POST["password"];
 
-    UserController::login($email, $password);
+    UserController::login($username, $password);
 ?>

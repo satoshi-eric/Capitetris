@@ -41,14 +41,14 @@
             }
         }
 
-        public static function login(string $email, string $password){
+        public static function login(string $username, string $password){
             $query = "SELECT * FROM tbl_usuario WHERE email = ?;";
             $stm = Connection::getConnection()->prepare($query);
-            $stm->bindValue(1, $email);
+            $stm->bindValue(1, $username);
             $stm->execute();
 
             $data = $stm->fetch(PDO::FETCH_ASSOC);
-            if($data["email"] == $email){
+            if($data["email"] == $username){
                 $validPassword = password_verify($password, $data["password"]);
                 if($validPassword){
                     //da pra gerar o token de acesso aqui , se necessário pra esse trab.
