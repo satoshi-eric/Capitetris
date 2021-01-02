@@ -325,10 +325,13 @@ function setarTetromino() {
     jogador.pos.y = 0;
     jogador.pos.x = (arena[0].length / 2 | 0) - 
                     (jogador.matriz[0].length / 2 | 0);
+
+    /** ============================ PERDE O JOGO ============================ */
     if (colidir(arena, jogador)){
         arena.forEach(row => row.fill(0));
         jogador.pontos = 0;
         atualizarScore();
+        alert("GAME OVER")
     }
 }
 /**
