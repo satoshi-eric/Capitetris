@@ -468,7 +468,7 @@ function update(tempo = 0) {
     }
 
     desenhar();
-    xhttpAnimationFrame(update);
+    requestAnimationFrame(update);
 }
 
 let nivelDisplay = document.querySelector('.level > .content-game-data')
