@@ -331,9 +331,35 @@ function setarTetromino() {
         arena.forEach(row => row.fill(0));
         jogador.pontos = 0;
         atualizarScore();
-        alert("GAME OVER")
+        // alert("GAME OVER")
+        console.log("game over")
+        sendValues(getValues())
     }
 }
+
+function getValues(){
+    const score = document.querySelector("#score_data").innerHTML
+    const level = document.querySelector("#level_data").innerHTML
+    const lines = document.querySelector("#lines_data").innerHTML
+    const time = document.querySelector("#time_data").innerHTML
+
+    return { score, level, lines, time }
+}
+
+function sendValues(values) {
+    var xhttp = new XMLHttpxhttp();
+    var url = "./../php/receiveValuesRanking.php";
+    xhttp.open("POST", url, true);
+    xhttp.setxhttpHeader("Content-Type", "application/json");
+    xhttp.onreadystatechange = function () {
+        if (xhttp.readyState === 4 && xhttp.status === 200) {
+            var jsonData = JSON.parse(xhttp.response);
+            console.log(jsonData);
+        }
+    }
+    xhttp.send(JSON.stringify(values));
+}
+
 /**
  * a função setarTetromino é muito parecida com a função setarTetrominoInicial. O principal diferencial é que ela age
  * como um 'buffer' de peças para satisfazer a função de mostrar a peça seguinte
@@ -425,7 +451,7 @@ function tempoDificuldade(nivel) {
 let tempoAnterior = 0; //vai ser util para sabermos a diferença de tempo entre a queda de uma peça e outra
 
 /**
- * a função update vai atualizar a posição da peça, chamando a função desenhar e fazendo um request "requestAnimationFrame(self)"
+ * a função update vai atualizar a posição da peça, chamando a função desenhar e fazendo um xhttp "xhttpAnimationFrame(self)"
  * após avaliar se o tempo de espera entre a última queda e o momento atual for maior que o tempo expresso pelo nivel
  * de dificuldade atual do jogo, invocando a função descidaJogador. Além disso, é avaliado se a pontuação do jogador
  * é maior que 0 e se é multipla de 300. Caso seja, o nível do jogo será aumentado
@@ -442,7 +468,7 @@ function update(tempo = 0) {
     }
 
     desenhar();
-    requestAnimationFrame(update);
+    xhttpAnimationFrame(update);
 }
 
 let nivelDisplay = document.querySelector('.level > .content-game-data')

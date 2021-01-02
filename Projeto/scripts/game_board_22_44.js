@@ -332,8 +332,20 @@ function setarTetromino() {
         jogador.pontos = 0;
         atualizarScore();
         alert("GAME OVER")
+
+        console.log(getValues())
     }
 }
+
+function getValues(){
+    const score = document.querySelector("#score_data").value
+    const level = document.querySelector("#level_data").value
+    const lines = document.querySelector("#lines_data").value
+    const time = document.querySelector("#time_data").value
+
+    return { score, level, lines, time }
+}
+
 /**
  * a função setarTetromino é muito parecida com a função setarTetrominoInicial. O principal diferencial é que ela age
  * como um 'buffer' de peças para satisfazer a função de mostrar a peça seguinte
