@@ -347,14 +347,14 @@ function getValues(){
 }
 
 function sendValues(values) {
-    var xhttp = new XMLHttpxhttp();
-    var url = "./../php/receiveValuesRanking.php";
+    var xhttp = new XMLHttpRequest();
+    var url = "http://localhost/Capitetris/Projeto/php/receiveValuesRanking.php";
     xhttp.open("POST", url, true);
-    xhttp.setxhttpHeader("Content-Type", "application/json");
+    xhttp.setRequestHeader("Content-Type", "application/json");
     xhttp.onreadystatechange = function () {
         if (xhttp.readyState === 4 && xhttp.status === 200) {
             var jsonData = JSON.parse(xhttp.response);
-            console.log(jsonData);
+            console.log("response data: " ,jsonData);
         }
     }
     xhttp.send(JSON.stringify(values));
