@@ -333,17 +333,26 @@ function setarTetromino() {
         atualizarScore();
         // alert("GAME OVER")
         console.log("game over")
-        sendValues(getValues())
+        let id_usuario = document.getElementById("id_usuario").innerHTML
+        console.log("id usuario: ", id_usuario)
+        alert(id_usuario)
+        // sendValues(getValues(id_usuario))
     }
 }
 
-function getValues(){
+function getValues(id_usuario){
     const score = document.querySelector("#score_data").innerHTML
     const level = document.querySelector("#level_data").innerHTML
     const lines = document.querySelector("#lines_data").innerHTML
     const time = document.querySelector("#time_data").innerHTML
 
-    return { score, level, lines, time }
+    return {
+        id_usuario, 
+        score,
+        level,
+        lines,
+        time
+    }
 }
 
 function sendValues(values) {
@@ -353,8 +362,8 @@ function sendValues(values) {
     xhttp.setRequestHeader("Content-Type", "application/json");
     xhttp.onreadystatechange = function () {
         if (xhttp.readyState === 4 && xhttp.status === 200) {
-            var jsonData = JSON.parse(xhttp.response);
-            console.log("response data: " ,jsonData);
+            // var jsonData = JSON.parse(xhttp.response);
+            console.log("response data: " ,xhttp.response);
         }
     }
     xhttp.send(JSON.stringify(values));

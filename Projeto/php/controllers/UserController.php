@@ -48,10 +48,11 @@
             $stm->execute();
 
             $data = $stm->fetch(PDO::FETCH_ASSOC);
-            if($data["email"] == $username){
+            if($data["username"] == $username){
                 $validPassword = password_verify($password, $data["password"]);
                 if($validPassword){
-                    //da pra gerar o token de acesso aqui , se necessário pra esse trab.
+                    session_start();
+                    $_SESSION["id_usuario"] = $data["id_usuario"];
                     return true;
                 }else{
                     return false;
