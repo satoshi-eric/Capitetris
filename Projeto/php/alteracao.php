@@ -1,6 +1,6 @@
 <?php
     session_start();
-    require_once("./User.php");
+    require_once("./classes/User.php");
     require_once("./controllers/UserController.php");
 
     $id = $_SESSION["id_usuario"];

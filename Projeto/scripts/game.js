@@ -330,14 +330,9 @@ function setarTetromino() {
     if (colidir(arena, jogador)){
         arena.forEach(row => row.fill(0));
         jogador.pontos = 0;
-        atualizarScore();
-        // alert("GAME OVER")
-        console.log("game over")
         let id_usuario = document.getElementById("id_usuario").innerHTML
-        console.log("id usuario: ", id_usuario)
-        console.log("score: ", document.getElementById("score_data").innerHTML)
         sendValues(getValues(id_usuario))
-        // alert(id_usuario)
+        atualizarScore();
     }
 }
 
@@ -348,11 +343,11 @@ function getValues(id_usuario){
     const time = document.querySelector("#time_data").innerHTML
 
     return {
-        id_usuario, 
+        id_usuario,
         score,
         level,
         lines,
-        time
+        time 
     }
 }
 
@@ -422,20 +417,6 @@ function rotac(matriz, dir) {
  * após, sua reversa.
  * @param (matriz, dir)
  */
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 let contadorQueda = 0;
 let nivel = 1
 let pontuacaoControle = 0
@@ -485,7 +466,8 @@ let nivelDisplay = document.querySelector('.level > .content-game-data')
 let linesDisplay = document.querySelector('.lines > .content-game-data')
 
 function atualizarScore() {
-    document.querySelector('.score > .content-game-data').innerText = jogador.pontos
+    document.querySelector('#score_data').innerHTML = jogador.pontos
+    document.querySelector("#score_data").setAttribute("score", jogador.pontos)
     linesDisplay.innerHTML = linhasEliminadas
     // Verificação para aumentar o nível
     if (jogador.pontos > 0 && jogador.pontos % 300 === 0 && jogador.pontos > pontuacaoControle) {

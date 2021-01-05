@@ -110,7 +110,7 @@ body {
     margin: 20px 0;
 }
 
-.rankingOption {
+.rankingOption > a{
     color: #E2E2E2;
     font-size: 28px;
     align-self: center!important;
@@ -118,9 +118,11 @@ body {
     -webkit-text-stroke-width: 2px;
     -webkit-text-stroke-color: transparent;
     transition: .25s ease;
+
+    text-decoration: none;
 }
 
-.rankingOption:hover {
+.rankingOption > a:hover {
     cursor: pointer;
     /* color: #c4c3c3;
     border-bottom: 4px solid #c4c3c3; */

@@ -1,6 +1,6 @@
 <?php
-    include __DIR__."\..\Connection.php";
-    include __DIR__."\..\Ranking.php";
+    include __DIR__."\..\classes\Connection.php";
+    include __DIR__."\..\classes\Ranking.php";
 
     class RankingController{
         public static function insert(Ranking $ranking){

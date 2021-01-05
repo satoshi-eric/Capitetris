@@ -1,5 +1,7 @@
 <?php
     include "./php/validation.php";
+    include "./php/classes/Connection.php";
+    include "./php/utils/displayRankingGame.php"
 ?>
 
 <!DOCTYPE html>
@@ -18,26 +20,7 @@
         <div class="ranking-container">
             <p class="title-tela-inicial">Capitetris</p>
             <div class="ranking-card-container">
-                <div class="card-ranking">
-                    <p class="nickname">Nickname</p>
-                    <p class="points">Pontuação</p>
-                </div>
-                <div class="card-ranking">
-                    <p class="nickname">Nickname</p>
-                    <p class="points">Pontuação</p>
-                </div>
-                <div class="card-ranking">
-                    <p class="nickname">Nickname</p>
-                    <p class="points">Pontuação</p>
-                </div>
-                <div class="card-ranking">
-                    <p class="nickname">Nickname</p>
-                    <p class="points">Pontuação</p>
-                </div>
-                <div class="card-ranking">
-                    <p class="nickname">Nickname</p>
-                    <p class="points">Pontuação</p>
-                </div>
+                <?php displayRanking(); ?>
             </div>
             <div class="navigation">
                 <div class="nav_logout iconNav">
@@ -46,7 +29,7 @@
                     </a>
                 </div>
                 <div class="nav_ranking iconNav">
-                    <a href="ranking.php">
+                    <a href="ranking_global.php">
                         <img src="./images/trophy.png" class="iconNav" alt="icon_trofeu">
                     </a>
                 </div>
