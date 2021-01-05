@@ -1,5 +1,29 @@
 <?php
     include "./php/validation.php";
+    include "./php/Connection.php";
+
+    function displayRanking(){
+        $query = "SELECT tbl_ranking.level, tbl_ranking.score, tbl_ranking.lines, tbl_ranking.time, tbl_usuario.nome
+        FROM tbl_ranking 
+        INNER JOIN tbl_usuario 
+        ON tbl_ranking.fk_id_usuario = tbl_usuario.id_usuario 
+        ORDER BY tbl_ranking.score DESC";
+
+        foreach(Connection::getConnection()->query($query) as $row){
+            echo '
+    
+                <div class="rankingCard">
+                    <span class="rankingName">'.$row["nome"].'</span>
+                    <div class="rankingSpecs">
+                        <span class="rankingLevel">'.$row["level"].'</span>
+                        <span class="rankingPoints">'.$row["score"].'</span>    
+                        <img class="imgTrophy" src="images/first.png" alt="troféu primeiro lugar">
+                    </div>  
+                </div>
+            
+            ';
+        }
+    }
 ?>
 
 <!DOCTYPE html>
@@ -29,7 +53,7 @@
                         <span class="rankingOption">Pessoal</span>
                     </div>
                 </div>
-                <div class="rankingCard">
+                <!-- <div class="rankingCard">
                     <span class="rankingName">Usuário</span>
                     <div class="rankingSpecs">
                         <span class="rankingLevel">LVL 4</span>
@@ -61,47 +85,8 @@
                         <span class="rankingPoints">1000 PTS</span>
                         <span class="rankingPosition">4</span>
                     </div>
-                </div>
-                <div class="rankingCard">
-                    <span class="rankingName">Usuário</span>
-                    <div class="rankingSpecs">
-                        <span class="rankingLevel">LVL 1</span>
-                        <span class="rankingPoints">1000 PTS</span>
-                        <span class="rankingPosition">4</span>
-                    </div>
-                </div>
-                <div class="rankingCard">
-                    <span class="rankingName">Usuário</span>
-                    <div class="rankingSpecs">
-                        <span class="rankingLevel">LVL 1</span>
-                        <span class="rankingPoints">1000 PTS</span>
-                        <span class="rankingPosition">4</span>
-                    </div>
-                </div>
-                <div class="rankingCard">
-                    <span class="rankingName">Usuário</span>
-                    <div class="rankingSpecs">
-                        <span class="rankingLevel">LVL 1</span>
-                        <span class="rankingPoints">1000 PTS</span>
-                        <span class="rankingPosition">4</span>
-                    </div>
-                </div>
-                <div class="rankingCard">
-                    <span class="rankingName">Usuário</span>
-                    <div class="rankingSpecs">
-                        <span class="rankingLevel">LVL 1</span>
-                        <span class="rankingPoints">1000 PTS</span>
-                        <span class="rankingPosition">4</span>
-                    </div>
-                </div>
-                <div class="rankingCard">
-                    <span class="rankingName">Usuário</span>
-                    <div class="rankingSpecs">
-                        <span class="rankingLevel">LVL 1</span>
-                        <span class="rankingPoints">1000 PTS</span>
-                        <span class="rankingPosition">4</span>
-                    </div>
-                </div>      
+                </div> -->
+                <?php displayRanking(); ?>
             </div>
         </div>
     </body>

@@ -41,6 +41,23 @@
             }
         }
 
+        public static function update(string $nome, string $telefone, string $email, string $senha, int $id){
+            try{
+                $insert = "UPDATE tbl_usuario SET `nome` = ?, `telefone` = ?, `email` = ?,  `password` = ? WHERE id_usuario = ?;";
+                $stm =  Connection::getConnection()->prepare($insert);
+                $stm->bindValue(1, $nome);
+                $stm->bindValue(2, $telefone);
+                $stm->bindValue(3, $email);
+                $stm->bindValue(4, $senha);
+                $stm->bindValue(5, $id);
+                $stm->execute();
+
+                return true;
+            }catch(PDOException $error){
+                echo "ERROR: ".$error;
+            }
+        }
+
         public static function login(string $username, string $password){
             $query = "SELECT * FROM tbl_usuario WHERE username = ?;";
             $stm = Connection::getConnection()->prepare($query);
@@ -53,6 +70,12 @@
                 if($validPassword){
                     session_start();
                     $_SESSION["id_usuario"] = $data["id_usuario"];
+                    $_SESSION["nome_usuario"] = $data["nome"];
+                    $_SESSION["cpf_usuario"] = $data["cpf"];
+                    $_SESSION["telefone_usuario"] = $data["telefone"];
+                    $_SESSION["email_usuario"] = $data["email"];
+                    $_SESSION["username_usuario"] = $data["username"];
+                    $_SESSION["password_usuario"] = $data["password"];
                     return true;
                 }else{
                     return false;

@@ -13,8 +13,8 @@
     $user = new User($nome, $data_nascimento, $cpf, $telefone, $email, $username, $password);
 
     if(UserController::insert($user)){
-        echo "Cadastrado com sucesso!";
+        header("Location: ../index.html");
     }else{
-        echo "Já cadastrado na base de dados.";
+        header("Location: ../cadastro.html");
     }
 ?>

@@ -1,5 +1,6 @@
 <?php
     include "./php/validation.php";
+    $_SESSION["id_usuario"];
 ?>
 
 <!DOCTYPE html>
@@ -14,12 +15,12 @@
 <body>
     <div class="container">
         <a href="tela_inicial.php" class="voltar">&lt;</a>
-        <form action="#">
+        <form action="./php/alteracao.php" method="POST">
             <h1>Alterar informações</h1>
-            <input type="text" name="#" id="altNome" class="nome" placeholder="Nome" required>
-            <input type="tel" name="#" id="altTelefone" class="telefone" placeholder="Telefone" required>
-            <input type="email" name="#" id="altEmail" class="email" placeholder="E-mail" required>
-            <input type="password" name="#" id="altSenha" class="senha" placeholder="Senha" required>
+            <input type="text" name="nome" id="altNome" class="nome" value=<?php echo $_SESSION["nome_usuario"]; ?> required>
+            <input type="tel" name="telefone" id="altTelefone" class="telefone" value=<?php echo $_SESSION["telefone_usuario"]; ?> required>
+            <input type="email" name="email" id="altEmail" class="email" value=<?php echo $_SESSION["email_usuario"]; ?> required>
+            <input type="password" name="senha" id="altSenha" class="senha" placeholder="password" required>
             <input type="submit" value="Alterar">
         </form>
     </div>
