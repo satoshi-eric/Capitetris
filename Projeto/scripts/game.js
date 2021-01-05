@@ -353,7 +353,7 @@ function getValues(id_usuario){
 
 function sendValues(values) {
     var xhttp = new XMLHttpRequest();
-    var url = "http://localhost/Capitetris/Projeto/php/receiveValuesRanking.php";
+    var url = "http://localhost/Capitetris/Projeto/php/saveRanking.php";
     xhttp.open("POST", url, true);
     xhttp.setRequestHeader("Content-Type", "application/json");
     xhttp.onreadystatechange = function () {

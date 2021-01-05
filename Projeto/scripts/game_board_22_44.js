@@ -262,7 +262,7 @@ function moverJogador(dir) {
     if (colidir(arena, jogador)){
         jogador.pos.x -= dir;
     }
-} 
+} //sinistro.. <- real, olá :D
 /**
  * a função moverJogador vai mover o jogador da direita para a esquerda, aumentando o valor de sua posição x. Caso haja 
  * colisão, a posição decresce da mesma quantidade em que aumentou e retorna a sua posição original.
@@ -285,8 +285,38 @@ function setarTetrominoInicial() {
     if (colidir(arena, jogador)){
         arena.forEach(row => row.fill(0));
         jogador.pontos = 0;
+        sendValues(getValues(id_usuario))
         atualizarScore();
     }
+}
+
+function getValues(id_usuario){
+    const score = document.querySelector("#score_data").innerHTML
+    const level = document.querySelector("#level_data").innerHTML
+    const lines = document.querySelector("#lines_data").innerHTML
+    const time = document.querySelector("#time_data").innerHTML
+
+    return {
+        id_usuario,
+        score,
+        level,
+        lines,
+        time 
+    }
+}
+
+function sendValues(values) {
+    var xhttp = new XMLHttpRequest();
+    var url = "http://localhost/Capitetris/Projeto/php/saveRanking.php";
+    xhttp.open("POST", url, true);
+    xhttp.setRequestHeader("Content-Type", "application/json");
+    xhttp.onreadystatechange = function () {
+        if (xhttp.readyState === 4 && xhttp.status === 200) {
+            // var jsonData = JSON.parse(xhttp.response);
+            console.log("response data: " ,xhttp.response);
+        }
+    }
+    xhttp.send(JSON.stringify(values));
 }
 /**
  * a função setarTetrominoInicial é necessaria para que podemos iniciar qual tetromino será o primeiro da rodada, uma
@@ -326,24 +356,43 @@ function setarTetromino() {
     jogador.pos.x = (arena[0].length / 2 | 0) - 
                     (jogador.matriz[0].length / 2 | 0);
 
-    /** ============================ PERDE O JOGO ============================ */
+    /* ====================== PERDE O JOGO ====================== */
     if (colidir(arena, jogador)){
         arena.forEach(row => row.fill(0));
         jogador.pontos = 0;
+        let id_usuario = document.getElementById("id_usuario").innerHTML
+        sendValues(getValues(id_usuario))
         atualizarScore();
-        alert("GAME OVER")
-
-        console.log(getValues())
     }
 }
 
-function getValues(){
-    const score = document.querySelector("#score_data").value
-    const level = document.querySelector("#level_data").value
-    const lines = document.querySelector("#lines_data").value
-    const time = document.querySelector("#time_data").value
+function getValues(id_usuario){
+    const score = document.querySelector("#score_data").innerHTML
+    const level = document.querySelector("#level_data").innerHTML
+    const lines = document.querySelector("#lines_data").innerHTML
+    const time = document.querySelector("#time_data").innerHTML
 
-    return { score, level, lines, time }
+    return {
+        id_usuario,
+        score,
+        level,
+        lines,
+        time 
+    }
+}
+
+function sendValues(values) {
+    var xhttp = new XMLHttpRequest();
+    var url = "http://localhost/Capitetris/Projeto/php/receiveValuesRanking.php";
+    xhttp.open("POST", url, true);
+    xhttp.setRequestHeader("Content-Type", "application/json");
+    xhttp.onreadystatechange = function () {
+        if (xhttp.readyState === 4 && xhttp.status === 200) {
+            // var jsonData = JSON.parse(xhttp.response);
+            console.log("response data: " ,xhttp.response);
+        }
+    }
+    xhttp.send(JSON.stringify(values));
 }
 
 /**
@@ -398,20 +447,6 @@ function rotac(matriz, dir) {
  * após, sua reversa.
  * @param (matriz, dir)
  */
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 let contadorQueda = 0;
 let nivel = 1
 let pontuacaoControle = 0
@@ -437,7 +472,7 @@ function tempoDificuldade(nivel) {
 let tempoAnterior = 0; //vai ser util para sabermos a diferença de tempo entre a queda de uma peça e outra
 
 /**
- * a função update vai atualizar a posição da peça, chamando a função desenhar e fazendo um request "requestAnimationFrame(self)"
+ * a função update vai atualizar a posição da peça, chamando a função desenhar e fazendo um xhttp "xhttpAnimationFrame(self)"
  * após avaliar se o tempo de espera entre a última queda e o momento atual for maior que o tempo expresso pelo nivel
  * de dificuldade atual do jogo, invocando a função descidaJogador. Além disso, é avaliado se a pontuação do jogador
  * é maior que 0 e se é multipla de 300. Caso seja, o nível do jogo será aumentado
@@ -461,7 +496,8 @@ let nivelDisplay = document.querySelector('.level > .content-game-data')
 let linesDisplay = document.querySelector('.lines > .content-game-data')
 
 function atualizarScore() {
-    document.querySelector('.score > .content-game-data').innerText = jogador.pontos
+    document.querySelector('#score_data').innerHTML = jogador.pontos
+    document.querySelector("#score_data").setAttribute("score", jogador.pontos)
     linesDisplay.innerHTML = linhasEliminadas
     // Verificação para aumentar o nível
     if (jogador.pontos > 0 && jogador.pontos % 300 === 0 && jogador.pontos > pontuacaoControle) {

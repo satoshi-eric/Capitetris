@@ -19,9 +19,11 @@
         <!-- Ranking -->
         <div class="ranking-container">
             <p class="title-tela-inicial">Capitetris</p>
+            
             <div class="ranking-card-container">
                 <?php displayRanking(); ?>
             </div>
+
             <div class="navigation">
                 <div class="nav_logout iconNav">
                     <a href="./php/logout.php">
