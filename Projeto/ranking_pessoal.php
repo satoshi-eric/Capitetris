@@ -1,6 +1,6 @@
 <?php
     include "./php/validation.php";
-    include "./php/Connection.php";
+    include "./php/classes/Connection.php";
     include "./php/utils/displayRanking.php";
 ?>
 
