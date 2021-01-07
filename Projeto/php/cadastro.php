@@ -13,8 +13,8 @@
     $user = new User($nome, $data_nascimento, $cpf, $telefone, $email, $username, $password);
 
     if(UserController::insert($user)){
-        header("Location: ../index.html");
+        header("Location: ../operacao_sucesso.html");
     }else{
-        header("Location: ../cadastro.html");
+        header("Location: ../operacao_falhou.html");
     }
 ?>

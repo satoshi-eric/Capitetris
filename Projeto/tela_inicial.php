@@ -20,8 +20,8 @@
         <div class="ranking-container">
             <p class="title-tela-inicial">Capitetris</p>
             
-            <div class="ranking-card-container">
-                <?php displayRanking(); ?>
+            <div class="ranking-card-container" id="ranking_card_container">
+                <!-- <?php displayRanking(); ?> -->
             </div>
 
             <div class="navigation">
@@ -35,6 +35,11 @@
                         <img src="./images/trophy.png" class="iconNav" alt="icon_trofeu">
                     </a>
                 </div>
+                <!-- <div class="nav_history iconNav">
+                    <a href="./historico_partidas.php">
+                        <img src="./images/history.png" class="iconNav" alt="icon_history">
+                    </a>
+                </div> -->
                 <div class="nav_user iconNav">
                     <a href="alteracao.php">
                         <img src="./images/user.png" class="iconNav" alt="icon_usuario">
@@ -42,12 +47,6 @@
                 </div>
             </div>
         </div>
-
-        <!-- <div class="start">
-            <button onclick="play()">start</button>
-            <button onclick="set10x20()">10x20</button>
-            <button onclick="set22x44()">22x44</button>
-        </div> -->
 
         <!-- Canvas para o tetris -->
         <canvas id="tetris-canvas" width="300" height="600"></canvas>

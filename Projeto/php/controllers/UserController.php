@@ -1,6 +1,6 @@
 <?php
     include __DIR__."\..\classes\Connection.php";
-    include __DIR__."\..\classes\User.php";
+    // include __DIR__."\..\classes\User.php";
 
     class UserController{
         public static function validUser(string $username, string $cpf){

@@ -29,7 +29,7 @@
                     </div>
                     <div class="rankingNav">
                         <div class="rankingNav">
-                            <a href="./ranking_pessoal.php" class="rankingOption">Pessoal</a>    
+                            <a href="./historico_partidas.php" class="rankingOption">Histórico de partidas</a>   
                         </div>
                     </div>
                 </div>

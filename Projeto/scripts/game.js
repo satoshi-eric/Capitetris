@@ -351,6 +351,35 @@ function getValues(id_usuario){
     }
 }
 
+const factoryScores = (value) => { return { scores: value } }
+
+const removeOldScores = () => document.getElementById("ranking_card_container").innerHTML =  ""
+
+const buildScores = (objects) => {
+    removeOldScores()
+    const ranking_card_container = document.getElementById("ranking_card_container")
+    Object.values(objects).map(scores => 
+        scores.map(user => {
+            const rankingCard = document.createElement("div")
+            rankingCard.setAttribute("class", "card-ranking")
+            const nickname = document.createElement("p")
+            const points = document.createElement("p")
+            nickname.setAttribute("class", "nickname")
+            points.setAttribute("class", "points")
+
+            const textNickname = document.createTextNode(user.username)
+            const textPoints = document.createTextNode(user.score)
+
+            nickname.appendChild(textNickname)
+            points.appendChild(textPoints)
+
+            rankingCard.appendChild(nickname)
+            rankingCard.appendChild(points)
+            ranking_card_container.appendChild(rankingCard)
+        })
+    )
+}
+
 function sendValues(values) {
     var xhttp = new XMLHttpRequest();
     var url = "http://localhost/Capitetris/Projeto/php/saveRanking.php";
@@ -358,8 +387,7 @@ function sendValues(values) {
     xhttp.setRequestHeader("Content-Type", "application/json");
     xhttp.onreadystatechange = function () {
         if (xhttp.readyState === 4 && xhttp.status === 200) {
-            // var jsonData = JSON.parse(xhttp.response);
-            console.log("response data: " ,xhttp.response);
+            buildScores(factoryScores(JSON.parse(xhttp.response)))
         }
     }
     xhttp.send(JSON.stringify(values));

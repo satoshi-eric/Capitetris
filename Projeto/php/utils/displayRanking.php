@@ -2,7 +2,6 @@
 
     function displayRanking($nome, $level, $score, $position){
         echo '
-        
             <div class="rankingCard">
                 <span class="rankingName">'.$nome.'</span>
                 <div class="rankingSpecs">
@@ -23,15 +22,11 @@
     }
 
     function displayRankingGlobal(){
-        $query = "SELECT tbl_ranking.level, tbl_ranking.score, tbl_ranking.lines, tbl_ranking.time, tbl_usuario.nome
-        FROM tbl_ranking 
-        INNER JOIN tbl_usuario 
-        ON tbl_ranking.fk_id_usuario = tbl_usuario.id_usuario 
-        ORDER BY tbl_ranking.score DESC";
+        $query = "SELECT tbl_usuario.username, tbl_ranking.level, max(tbl_ranking.score) AS score FROM tbl_usuario INNER JOIN tbl_ranking ON tbl_ranking.fk_id_usuario = tbl_usuario.id_usuario GROUP BY tbl_usuario.id_usuario ORDER BY max(tbl_ranking.score) DESC";
 
         $counter = 1;
         foreach(Connection::getConnection()->query($query) as $row){
-            displayRanking($row["nome"], $row["level"], $row["score"], $counter);
+            displayRanking($row["username"], $row["level"], $row["score"], $counter);
             $counter++;
         }
     }
