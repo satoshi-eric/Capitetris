@@ -360,10 +360,16 @@ function setarTetromino() {
     if (colidir(arena, jogador)){
         arena.forEach(row => row.fill(0));
         jogador.pontos = 0;
-        let id_usuario = document.getElementById("id_usuario").innerHTML
-        sendValues(getValues(id_usuario))
+        linhasEliminadas = 0;
+        nivelDisplay.innerHTML = 1;
+        segundos = 0;
+        let id_usuario = document.getElementById("id_usuario").innerHTML;
+        sendValues(getValues(id_usuario));
         atualizarScore();
+        getValues
+        alert("Parabéns, você perdeu!");
     }
+    
 }
 
 function getValues(id_usuario){
