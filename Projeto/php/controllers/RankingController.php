@@ -1,7 +1,6 @@
 <?php
     include __DIR__."\..\classes\Connection.php";
     include __DIR__."\..\classes\Ranking.php";
-    include __DIR__."\..\classes\Score.php";
 
     class RankingController{
         public static function insert(Ranking $ranking){
@@ -24,9 +23,7 @@
         public static function showAll(int $id_usuario){
             try{
                 $query = "SELECT tbl_usuario.username, tbl_ranking.score FROM tbl_ranking INNER JOIN tbl_usuario ON tbl_ranking.fk_id_usuario = tbl_usuario.id_usuario WHERE tbl_usuario.id_usuario = $id_usuario ORDER BY tbl_ranking.score DESC LIMIT 10";
-
                 $json = array();
-
                 foreach(Connection::getConnection()->query($query) as $row){
                     array_push($json,  array("username" => $row["username"], "score" => $row["score"] ));
                 }
