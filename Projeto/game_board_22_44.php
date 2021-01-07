@@ -19,8 +19,8 @@
         <!-- Ranking -->
         <div class="ranking-container">
             <p class="title-tela-inicial">Capitetris</p>
-            <div class="ranking-card-container">
-                <?php displayRanking(); ?>
+            <div class="ranking-card-container" id="ranking_card_container">
+                <!-- <?php displayRanking(); ?> -->
             </div>
             <div class="navigation">
                 <div class="nav_logout iconNav">
@@ -76,6 +76,10 @@
     </div>
 
     <script src="./scripts/game_board_22_44.js"></script>
-    
+    <script>
+        let id_usuario = document.getElementById("id_usuario").innerHTML
+        console.log(id_usuario)
+        getRankings(id_usuario)
+    </script>
 </body>
 </html>

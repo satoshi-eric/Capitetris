@@ -285,38 +285,7 @@ function setarTetrominoInicial() {
     if (colidir(arena, jogador)){
         arena.forEach(row => row.fill(0));
         jogador.pontos = 0;
-        sendValues(getValues(id_usuario))
-        atualizarScore();
     }
-}
-
-function getValues(id_usuario){
-    const score = document.querySelector("#score_data").innerHTML
-    const level = document.querySelector("#level_data").innerHTML
-    const lines = document.querySelector("#lines_data").innerHTML
-    const time = document.querySelector("#time_data").innerHTML
-
-    return {
-        id_usuario,
-        score,
-        level,
-        lines,
-        time 
-    }
-}
-
-function sendValues(values) {
-    var xhttp = new XMLHttpRequest();
-    var url = "http://localhost/Capitetris/Projeto/php/saveRanking.php";
-    xhttp.open("POST", url, true);
-    xhttp.setRequestHeader("Content-Type", "application/json");
-    xhttp.onreadystatechange = function () {
-        if (xhttp.readyState === 4 && xhttp.status === 200) {
-            // var jsonData = JSON.parse(xhttp.response);
-            console.log("response data: " ,xhttp.response);
-        }
-    }
-    xhttp.send(JSON.stringify(values));
 }
 /**
  * a função setarTetrominoInicial é necessaria para que podemos iniciar qual tetromino será o primeiro da rodada, uma
@@ -364,9 +333,8 @@ function setarTetromino() {
         nivelDisplay.innerHTML = 1;
         segundos = 0;
         let id_usuario = document.getElementById("id_usuario").innerHTML;
-        sendValues(getValues(id_usuario));
+        saveRanking(getValues(id_usuario));
         atualizarScore();
-        getValues
         alert("Parabéns, você perdeu!");
     }
     
@@ -387,18 +355,59 @@ function getValues(id_usuario){
     }
 }
 
-function sendValues(values) {
+const factoryScores = (value) => { return { scores: value } }
+
+const removeOldScores = () => document.getElementById("ranking_card_container").innerHTML =  ""
+
+const buildScores = (objects) => {
+    removeOldScores()
+    const ranking_card_container = document.getElementById("ranking_card_container")
+    Object.values(objects).map(scores => 
+        scores.map(user => {
+            const rankingCard = document.createElement("div")
+            rankingCard.setAttribute("class", "card-ranking")
+            const nickname = document.createElement("p")
+            const points = document.createElement("p")
+            nickname.setAttribute("class", "nickname")
+            points.setAttribute("class", "points")
+
+            const textNickname = document.createTextNode(user.username)
+            const textPoints = document.createTextNode(user.score)
+
+            nickname.appendChild(textNickname)
+            points.appendChild(textPoints)
+
+            rankingCard.appendChild(nickname)
+            rankingCard.appendChild(points)
+            ranking_card_container.appendChild(rankingCard)
+        })
+    )
+}
+
+function saveRanking(values) {
     var xhttp = new XMLHttpRequest();
-    var url = "http://localhost/Capitetris/Projeto/php/receiveValuesRanking.php";
+    var url = "http://localhost/Capitetris/Projeto/php/saveRanking.php";
     xhttp.open("POST", url, true);
     xhttp.setRequestHeader("Content-Type", "application/json");
     xhttp.onreadystatechange = function () {
         if (xhttp.readyState === 4 && xhttp.status === 200) {
-            // var jsonData = JSON.parse(xhttp.response);
-            console.log("response data: " ,xhttp.response);
+            buildScores(factoryScores(JSON.parse(xhttp.response)))
         }
     }
     xhttp.send(JSON.stringify(values));
+}
+
+function getRankings(id_usuario) {
+    var xhttp = new XMLHttpRequest();
+    var url = "http://localhost/Capitetris/Projeto/php/getRankings.php";
+    xhttp.open("POST", url, true);
+    xhttp.setRequestHeader("Content-Type", "application/json");
+    xhttp.onreadystatechange = function () {
+        if (xhttp.readyState === 4 && xhttp.status === 200) {
+            buildScores(factoryScores(JSON.parse(xhttp.response)))
+        }
+    }
+    xhttp.send(JSON.stringify({ id_usuario }));
 }
 
 /**
