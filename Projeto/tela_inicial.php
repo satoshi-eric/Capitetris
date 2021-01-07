@@ -77,6 +77,10 @@
     </div>
 
     <script src="./scripts/game.js"></script>
-    
+    <script>
+        let id_usuario = document.getElementById("id_usuario").innerHTML
+        console.log(id_usuario)
+        getRankings(id_usuario)
+    </script>
 </body>
 </html>

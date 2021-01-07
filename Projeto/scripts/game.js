@@ -1,5 +1,3 @@
-
-
 const canvas = document.getElementById("tetris-canvas");
 const context = canvas.getContext("2d");
 
@@ -334,9 +332,8 @@ function setarTetromino() {
         nivelDisplay.innerHTML = 1;
         segundos = 0;
         let id_usuario = document.getElementById("id_usuario").innerHTML;
-        sendValues(getValues(id_usuario));
+        saveRanking(getValues(id_usuario));
         atualizarScore();
-        getValues
         alert("Parabéns, você perdeu!");
     }
 }
@@ -385,7 +382,7 @@ const buildScores = (objects) => {
     )
 }
 
-function sendValues(values) {
+function saveRanking(values) {
     var xhttp = new XMLHttpRequest();
     var url = "http://localhost/Capitetris/Projeto/php/saveRanking.php";
     xhttp.open("POST", url, true);
@@ -397,6 +394,21 @@ function sendValues(values) {
     }
     xhttp.send(JSON.stringify(values));
 }
+
+
+function getRankings(id_usuario) {
+    var xhttp = new XMLHttpRequest();
+    var url = "http://localhost/Capitetris/Projeto/php/getRankings.php";
+    xhttp.open("POST", url, true);
+    xhttp.setRequestHeader("Content-Type", "application/json");
+    xhttp.onreadystatechange = function () {
+        if (xhttp.readyState === 4 && xhttp.status === 200) {
+            buildScores(factoryScores(JSON.parse(xhttp.response)))
+        }
+    }
+    xhttp.send(JSON.stringify({ id_usuario }));
+}
+
 
 /**
  * a função setarTetromino é muito parecida com a função setarTetrominoInicial. O principal diferencial é que ela age
