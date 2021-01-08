@@ -1,3 +1,1 @@
 1 - execute o arquivo generateDatabaseAndTables.php
-
-2 - clique em "Ir para o jogo"
