@@ -1,1 +1,8 @@
-1 - execute o arquivo generateDatabaseAndTables.php
+1 - abra o arquivo generateDatabaseAndTables.php
+
+2 - Realize as seguinte atribuções: 
+ 	- Atribuir o username do seu banco de dados a variável $username;
+	- Atribuir o password do seu banco de dados a variável $password;
+	- Atribuir o host do seu banco de dados a variável $host;
+
+3 - execute o arquivo generateDatabaseAndTables.php
